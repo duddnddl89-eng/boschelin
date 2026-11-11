@@ -1,0 +1,1652 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#B3261E">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="보슐랭">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="./manifest.json">
+<link rel="apple-touch-icon" href="./icon-180.png">
+<link rel="icon" href="./icon-192.png">
+<title>보슐랭 가이드</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+:root{
+  --bg:#FAF6EF; --card:#FFFFFF; --ink:#1F2A37; --sub:#6B7280; --line:#E8E1D6;
+  --red:#B3261E; --red-soft:#F7E6E3; --navy:#1E3A5F; --green:#2E7D4F; --soft:#EFE8DC;
+  --yw:#2F5D8A; --bs:#D9667A; --radius:14px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;font-size:15px;line-height:1.45}
+body{padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+a{color:inherit}
+button{font-family:inherit}
+.hidden{display:none!important}
+
+/* 상단 */
+.top{position:sticky;top:0;z-index:20;background:rgba(250,246,239,.94);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:center;gap:6px;padding:calc(10px + env(safe-area-inset-top)) 12px 10px 16px;border-bottom:1px solid var(--line)}
+.top h1{font-size:18px;margin:0;flex:1;font-weight:800;letter-spacing:-.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand{color:var(--red)}
+.icon-btn{border:0;background:none;font-size:20px;padding:6px 8px;cursor:pointer;color:var(--ink)}
+.view{max-width:760px;margin:0 auto;padding:14px 16px 28px}
+.view.map-view{max-width:none;padding:0;position:relative}
+
+/* 하단 탭 */
+.tabs{position:fixed;bottom:0;left:0;right:0;z-index:30;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:space-around;align-items:flex-end;padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
+.tabs a{flex:1;text-align:center;text-decoration:none;color:var(--sub);font-size:11px;display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 0}
+.tabs a .i{font-size:21px;line-height:1.2}
+.tabs a.on{color:var(--red);font-weight:700}
+.tabs a.add .i{background:var(--red);color:#fff;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin-top:-24px;box-shadow:0 4px 12px rgba(179,38,30,.35)}
+.side-brand{display:none;font-weight:900;font-size:21px;color:var(--red);padding:6px 14px 20px;letter-spacing:-.5px}
+@media (min-width:900px){
+  body{padding-bottom:0;padding-left:220px}
+  .tabs{top:0;bottom:0;right:auto;width:220px;flex-direction:column;justify-content:flex-start;align-items:stretch;border-top:0;border-right:1px solid var(--line);padding:22px 12px;gap:4px}
+  .side-brand{display:block}
+  .tabs a{flex:0 0 auto;flex-direction:row;gap:12px;font-size:15px;padding:11px 14px;border-radius:10px}
+  .tabs a.on{background:var(--red-soft)}
+  .tabs a.add .i{width:auto;height:auto;margin:0;background:none;color:inherit;box-shadow:none;font-size:21px}
+  .view{max-width:900px}
+}
+
+/* 공통 */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px;margin-bottom:12px}
+.sec-title{font-size:13px;font-weight:700;color:var(--sub);margin:20px 2px 8px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.sec-title:first-child{margin-top:4px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:10px;padding:10px 14px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none}
+.btn.primary{background:var(--red);border-color:var(--red);color:#fff}
+.btn.navy{background:var(--navy);border-color:var(--navy);color:#fff}
+.btn.danger{color:var(--red);border-color:#EBC4C0}
+.btn.ghost{background:none;border-color:transparent;color:var(--sub)}
+.btn.sm{padding:6px 10px;font-size:13px;border-radius:8px}
+.btn.full{width:100%;margin-top:8px}
+.btn:disabled{opacity:.5}
+.link{border:0;background:none;color:var(--red);font-weight:700;font-size:13px;cursor:pointer;padding:0}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;margin-bottom:6px}
+.chips::-webkit-scrollbar{display:none}
+.chips.wrap{flex-wrap:wrap;overflow:visible}
+.chip{flex:none;border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font-size:13px;cursor:pointer;white-space:nowrap;color:var(--ink)}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.seg{display:flex;background:var(--soft);border-radius:10px;padding:3px;margin-bottom:12px}
+.seg button{flex:1;border:0;background:none;padding:8px 4px;border-radius:8px;font-weight:600;color:var(--sub);cursor:pointer;font-size:14px}
+.seg button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.meta{font-size:12.5px;color:var(--sub)}
+.center{text-align:center}
+.empty{text-align:center;color:var(--sub);padding:36px 10px;font-size:14px}
+.row{display:flex;gap:8px}
+.row>*{flex:1;min-width:0}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:12.5px;color:var(--sub);margin-bottom:5px;font-weight:600}
+input,select,textarea{width:100%;font:inherit;font-size:16px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);-webkit-appearance:none;appearance:none}
+select{background-image:linear-gradient(45deg,transparent 50%,#999 50%),linear-gradient(135deg,#999 50%,transparent 50%);background-position:calc(100% - 16px) 50%,calc(100% - 11px) 50%;background-size:5px 5px;background-repeat:no-repeat;padding-right:28px}
+input[type=checkbox]{width:18px;height:18px;-webkit-appearance:checkbox;appearance:auto;vertical-align:middle;margin:0 6px 0 0}
+textarea{min-height:70px;resize:vertical}
+.check{display:flex;align-items:center;font-size:14px;margin:6px 0;cursor:pointer}
+.kv{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dashed var(--line);font-size:14px;gap:10px}
+.kv:last-child{border-bottom:0}
+.kv span:first-child{color:var(--sub);flex:none}
+.kv span:last-child{text-align:right}
+.who1{color:var(--yw);font-weight:700}
+.who2{color:var(--bs);font-weight:700}
+
+/* 장소 목록 */
+.pitem{display:flex;gap:12px;align-items:center;padding:11px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);margin-bottom:8px;cursor:pointer}
+.thumb{width:62px;height:62px;border-radius:10px;object-fit:cover;background:var(--soft);flex:none;display:flex;align-items:center;justify-content:center;font-size:26px;overflow:hidden}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.pbody{flex:1;min-width:0}
+.pname{font-weight:700;font-size:15.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.grade{display:inline-flex;align-items:center;gap:3px;font-size:11.5px;font-weight:800;padding:2px 7px;border-radius:6px;color:#fff;vertical-align:middle;white-space:nowrap}
+.grade.big{font-size:14px;padding:4px 10px;border-radius:8px}
+.tier{font-weight:800;color:var(--green);font-size:13px;letter-spacing:-1px}
+.status{font-size:11.5px;padding:2px 7px;border-radius:6px;background:var(--soft);color:var(--sub);font-weight:700;white-space:nowrap}
+
+/* 장소 상세 */
+.hero{border-radius:var(--radius);overflow:hidden;background:var(--soft);height:190px;display:flex;align-items:center;justify-content:center;font-size:56px;margin-bottom:12px}
+.hero img{width:100%;height:100%;object-fit:cover}
+.pd-name{font-size:22px;font-weight:800;margin:0 0 6px;letter-spacing:-.4px}
+.vcard{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:13px;margin-bottom:10px}
+.vhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.oneline{font-size:14px;margin:4px 0}
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+.pgrid img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:8px;background:#eee;display:block;cursor:pointer}
+
+/* 기록 폼 */
+.score{display:flex;align-items:center;gap:5px;margin-bottom:6px}
+.score span{width:68px;font-size:13px;flex:none}
+.score button{width:36px;height:34px;border-radius:8px;border:1px solid var(--line);background:#fff;font-weight:700;cursor:pointer;color:var(--ink)}
+.score button.on{background:var(--red);color:#fff;border-color:var(--red)}
+.irow{display:grid;grid-template-columns:1fr 92px 52px 36px 28px;gap:5px;margin-bottom:6px;align-items:center}
+.irow input{padding:8px;font-size:15px}
+.irow .rec{border:1px solid var(--line);background:#fff;border-radius:8px;height:38px;cursor:pointer;filter:grayscale(1);opacity:.5}
+.irow .rec.on{filter:none;opacity:1;border-color:var(--green)}
+.erow{display:grid;grid-template-columns:1fr 110px 28px;gap:5px;margin-bottom:6px}
+.erow input{padding:8px;font-size:15px}
+.x{border:0;background:none;color:var(--sub);font-size:16px;cursor:pointer}
+.phgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.ph{position:relative;aspect-ratio:1;border-radius:10px;overflow:hidden;background:var(--soft)}
+.ph img{width:100%;height:100%;object-fit:cover}
+.ph.add{display:flex;align-items:center;justify-content:center;font-size:28px;color:var(--sub);cursor:pointer;border:1.5px dashed #CFC6B8;background:#fff}
+.ph .phx{position:absolute;top:3px;right:3px;border:0;background:rgba(0,0,0,.55);color:#fff;border-radius:50%;width:22px;height:22px;font-size:12px;cursor:pointer}
+.ph .phc,.ph .phr{position:absolute;bottom:3px;border:0;border-radius:6px;font-size:10.5px;padding:2px 5px;background:rgba(255,255,255,.85);color:var(--ink);cursor:pointer}
+.ph .phc{left:3px}.ph .phr{right:3px}
+.ph .phc.on{background:var(--red);color:#fff}.ph .phr.on{background:var(--navy);color:#fff}
+.ph .rcpt{position:absolute;right:3px;bottom:3px;font-size:10.5px;background:var(--navy);color:#fff;border-radius:6px;padding:2px 5px}
+.savebar{position:sticky;bottom:calc(76px + env(safe-area-inset-bottom));padding-top:8px;background:linear-gradient(transparent,var(--bg) 30%)}
+@media (min-width:900px){.savebar{bottom:0}}
+
+/* 홈 */
+.hello{font-size:21px;font-weight:800;margin:4px 2px 14px;letter-spacing:-.4px}
+.random-btn{display:flex;align-items:center;gap:14px;width:100%;border:0;border-radius:16px;padding:18px;background:linear-gradient(135deg,#B3261E,#7E1A15);color:#fff;text-align:left;cursor:pointer;margin-bottom:12px}
+.random-btn .d{font-size:36px}
+.random-btn b{font-size:17px;display:block}
+.random-btn small{opacity:.85}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 10px}
+.stat .n{font-size:17px;font-weight:800;letter-spacing:-.3px}
+.stat .l{font-size:11.5px;color:var(--sub)}
+.alert{display:flex;align-items:center;gap:10px;background:var(--red-soft);border:1px solid #EBC4C0;border-radius:12px;padding:11px 13px;margin-bottom:10px;cursor:pointer;font-size:14px}
+.alert b{color:var(--red)}
+.hscroll{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}
+.hscroll::-webkit-scrollbar{display:none}
+.mini{flex:none;width:150px;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;cursor:pointer}
+.mini .mimg{height:96px;background:var(--soft);display:flex;align-items:center;justify-content:center;font-size:30px}
+.mini .mimg img{width:100%;height:100%;object-fit:cover}
+.mini .mb{padding:8px 9px}
+.mini .mn{font-weight:700;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* 지도 */
+#map{width:100%;height:calc(100vh - 58px - 76px);height:calc(100dvh - 58px - 76px - env(safe-area-inset-bottom) - env(safe-area-inset-top))}
+@media (min-width:900px){#map{height:calc(100vh - 58px)}}
+.map-ctl{position:absolute;top:8px;left:8px;right:8px;z-index:5}
+.map-ctl .chips{margin-bottom:4px}
+.map-ctl .chip{box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.pin{transform:translateY(-4px);min-width:28px;height:28px;padding:0 7px;border-radius:14px;color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.3);border:2px solid #fff;cursor:pointer;white-space:nowrap}
+.pin.wish{background:#fff!important;color:var(--ink);border:2px dashed var(--red)}
+.mapcard{position:absolute;left:10px;right:10px;bottom:12px;z-index:6;background:#fff;border-radius:14px;padding:13px;box-shadow:0 4px 16px rgba(0,0,0,.18)}
+.locbtn{position:absolute;right:12px;bottom:12px;z-index:5;width:44px;height:44px;border-radius:50%;border:0;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.2);font-size:20px;cursor:pointer}
+.mapcard:not(.hidden) ~ .locbtn{bottom:130px}
+
+/* 랜덤 여행 */
+.slot{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:12px 13px;margin-bottom:8px}
+.slot.locked{border-color:var(--navy);box-shadow:inset 3px 0 0 var(--navy)}
+.slot-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.slot-tag{font-size:12px;font-weight:800;color:var(--red)}
+.slot-name{font-size:16px;font-weight:800}
+.slot-b{display:flex;gap:6px;margin-top:8px}
+.tripmap{height:230px;border-radius:var(--radius);overflow:hidden;margin-bottom:12px;background:var(--soft)}
+.daylabel{font-weight:800;color:var(--navy);margin:14px 2px 8px}
+
+/* 통계 */
+.bars{display:flex;align-items:flex-end;gap:4px;height:120px;margin-top:8px}
+.bars .b{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}
+.bars .b i{display:block;width:100%;background:var(--red);border-radius:4px 4px 0 0;min-height:2px}
+.bars .b span{font-size:10px;color:var(--sub);margin-top:3px}
+.hbar{display:flex;align-items:center;gap:8px;margin:6px 0;font-size:13px}
+.hbar .hl{width:96px;flex:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hbar .ht{flex:1;background:var(--soft);border-radius:6px;height:12px;overflow:hidden}
+.hbar .ht i{display:block;height:100%;background:var(--navy);border-radius:6px}
+.hbar .hv{width:84px;text-align:right;flex:none;color:var(--sub);font-size:12px}
+table.t{width:100%;border-collapse:collapse;font-size:13px}
+table.t th,table.t td{padding:6px 4px;border-bottom:1px solid var(--line);text-align:left}
+table.t th{color:var(--sub);font-weight:600}
+table.t td.r,table.t th.r{text-align:right}
+
+/* 에디션 */
+.edition{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:26px 20px}
+.ed-cover{text-align:center;border-bottom:2px solid var(--red);padding-bottom:18px;margin-bottom:8px}
+.ed-cover .y{font-size:13px;letter-spacing:6px;color:var(--red);font-weight:800}
+.ed-cover h2{font-size:28px;margin:6px 0 4px;letter-spacing:-.5px}
+.ed-sec{margin-top:22px}
+.ed-sec h3{font-size:16px;margin:0 0 4px;color:var(--navy)}
+.ed-sec .d{font-size:12px;color:var(--sub);margin-bottom:10px}
+.ed-item{display:flex;gap:12px;padding:10px 0;border-top:1px solid var(--line);break-inside:avoid}
+.ed-item .thumb{width:72px;height:72px}
+
+/* 모달, 토스트 */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.42);z-index:100;display:flex;align-items:flex-end;justify-content:center}
+.modal{background:var(--bg);width:100%;max-width:560px;max-height:90vh;overflow:auto;border-radius:18px 18px 0 0;padding:18px 16px calc(20px + env(safe-area-inset-bottom))}
+.modal h3{margin:0 0 14px;font-size:18px}
+@media (min-width:700px){.modal-bg{align-items:center}.modal{border-radius:18px}}
+.toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;z-index:300;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90vw;text-align:center}
+.toast.show{opacity:1}
+.center-screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;gap:16px}
+.logo-big{font-size:38px;font-weight:900;color:var(--red);letter-spacing:-1px;text-align:center;line-height:1.05}
+.logo-big small{font-size:14px;letter-spacing:8px;color:var(--navy)}
+.pick{display:flex;gap:14px}
+.pick button{width:130px;height:130px;border-radius:24px;border:0;color:#fff;font-size:22px;font-weight:800;cursor:pointer}
+.spinner{width:32px;height:32px;border:3px solid var(--line);border-top-color:var(--red);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:400;display:flex;align-items:center;justify-content:center}
+.lightbox img{max-width:100%;max-height:100%}
+
+@media print{
+  .tabs,.top,.no-print{display:none!important}
+  body{padding:0!important;background:#fff}
+  .view{max-width:none;padding:0}
+  .edition{border:0;padding:0}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="toast" class="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/* =====================================================
+   보슐랭 가이드 v1
+   아래 3줄만 채우면 됩니다.
+   ===================================================== */
+const CONFIG = {
+  SUPABASE_URL: '',   // 예: https://abcdefgh.supabase.co
+  SUPABASE_KEY: '',   // anon key 또는 publishable key (service_role 키 절대 X)
+  KAKAO_JS_KEY: '',   // 카카오 JavaScript 키
+};
+const APP_VERSION = '1.0.0';
+
+/* ===================== 상수 ===================== */
+const PROFILES = { 1:{name:'영웅', color:'#2F5D8A'}, 2:{name:'보실', color:'#D9667A'} };
+const otherOf = id => id === 1 ? 2 : 1;
+const CAT = {
+  food:{label:'음식', icon:'🍽️'},
+  play:{label:'놀거리', icon:'🎡'},
+  stay:{label:'숙박', icon:'🏨'},
+};
+const GRADES = {
+  '3star':     {label:'보슐랭 3스타', short:'★★★', color:'#B3261E', desc:'이것 때문에 일부러 찾아갈 가치가 있는 곳', num:3},
+  '2star':     {label:'보슐랭 2스타', short:'★★',  color:'#C2410C', desc:'근처에 가면 꼭 들를 곳', num:2},
+  '1star':     {label:'보슐랭 1스타', short:'★',   color:'#D97706', desc:'훌륭한 곳', num:1},
+  'bogourmand':{label:'보구르망',     short:'🍙',  color:'#2E7D4F', desc:'가성비가 좋은 곳', num:1},
+  'selection': {label:'보슐랭 셀렉션', short:'📌',  color:'#5B6B7A', desc:'무난하고 괜찮은 곳', num:0.5},
+  'no':        {label:'재방문 X',     short:'✕',   color:'#9CA3AF', desc:'다시는 안 가는 곳', num:0},
+};
+const GRADE_ORDER = ['3star','2star','1star','bogourmand','selection','no'];
+const SCORE_ITEMS = {
+  food:['맛','분위기','서비스','가성비','웨이팅'],
+  play:['재미','접근성','혼잡도','가성비','재방문'],
+  stay:['청결','위치','시설','침구·방음','가성비'],
+};
+// 가격대 경계 (음식·놀거리: 1인 / 숙박: 1박)
+const TIERS = { food:[10000,30000,70000], play:[10000,30000,70000], stay:[70000,150000,300000] };
+const TIER_MID = { food:[6000,20000,50000,90000], play:[6000,20000,50000,90000], stay:[50000,110000,220000,350000] };
+const STATUS = { wish:'💭 가고 싶음', planned:'📅 계획됨', visited:'✅ 다녀옴' };
+const SOURCES = ['네이버 방문자리뷰','네이버 블로그','지인 추천','유튜브','인스타','지나가다','랜덤 여행','기타'];
+const COMPANIONS = ['둘이','영웅 혼자','보실 혼자','친구들과','가족과','기타'];
+const BOOKING = ['야놀자','여기어때','에어비앤비','네이버 예약','직접 예약','기타'];
+const EXTRA_PRESETS = {
+  food:['주차','주류','배달비','팁'],
+  play:['주차','대여','체험','교통'],
+  stay:['주차','조식','추가 인원','바베큐','교통'],
+};
+const ITEM_LABEL = { food:'먹은 메뉴', play:'이용 항목', stay:'객실·추가 항목' };
+
+// 랜덤 여행
+const SLOT_TEMPLATES = {
+  half:[{day:1,slot:'식사',type:'meal'},{day:1,slot:'카페·놀거리',type:'cafeplay'}],
+  day:[{day:1,slot:'점심',type:'meal'},{day:1,slot:'놀거리',type:'play'},{day:1,slot:'카페',type:'cafe'},{day:1,slot:'저녁',type:'meal'}],
+  overnight:[{day:1,slot:'점심',type:'meal'},{day:1,slot:'놀거리',type:'play'},{day:1,slot:'카페',type:'cafe'},{day:1,slot:'저녁',type:'meal'},{day:1,slot:'숙박',type:'stay'},{day:2,slot:'아침·점심',type:'meal'},{day:2,slot:'놀거리',type:'play'}],
+};
+const DURATION_LABEL = { half:'반나절', day:'당일', overnight:'1박 2일' };
+const MODE_LABEL = { car:'자차', transit:'대중교통', walk:'도보' };
+const MODE_KM = { car:{center:20, step:15}, transit:{center:8, step:5}, walk:{center:2.5, step:1.5} };
+const KAKAO_CODES = { meal:['FD6'], cafe:['CE7'], play:['AT4','CT1'], stay:['AD5'], cafeplay:['CE7','AT4','CT1'] };
+const DEFAULT_EST = { meal:15000, cafe:8000, play:20000, stay:60000, cafeplay:12000 };
+const NEAR_REGIONS = ['서울 종로구','서울 마포구','서울 성동구','서울 용산구','서울 강남구','서울 송파구','인천 중구','인천 연수구','강화군','수원시 팔달구','성남시 분당구','용인시 처인구','광명시','시흥시','안산시 단원구','화성시','평택시','이천시','여주시','양평군','가평군','남양주시','포천시','파주시','고양시 일산동구','김포시','의왕시','과천시','안성시','오산시'];
+const FAR_REGIONS = ['강릉시','속초시','양양군','춘천시','평창군','원주시','단양군','제천시','충주시','청주시','대전 중구','공주시','부여군','보령시','태안군','서산시','당진시','전주시','군산시','여수시','순천시','담양군','목포시','경주시','안동시','포항시','부산 해운대구','부산 중구','통영시','거제시','남해군','대구 중구','울산 중구','제천시'];
+
+/* ===================== 상태 ===================== */
+const S = {
+  session:null, profile:null, loaded:false, lastLoad:0,
+  places:[], visits:[], scores:[], payments:[], items:[], photos:[], trips:[], stops:[],
+  photoUrls:{}, photoUrlsAt:Date.now(),
+  ui:{
+    guide:{seg:'visited', cat:'all', grade:'all', tier:'all', region:'all', sort:'recent', q:''},
+    map:{cat:'all', status:'all'},
+    memory:{seg:'timeline', year:new Date().getFullYear()},
+    placeTab:{},
+    near:null,
+  },
+  form:null, addCtx:{source:'', source_url:'', q:''}, addResults:[],
+  tripForm:null, draftTrip:null, pendingShare:null, installEvt:null, lastPos:null,
+};
+let sb = null;
+
+/* ===================== 유틸 ===================== */
+const $ = (s, el=document) => el.querySelector(s);
+const $$ = (s, el=document) => [...el.querySelectorAll(s)];
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const sum = arr => arr.reduce((a,b)=>a+(Number(b)||0), 0);
+const avg = arr => arr.length ? sum(arr)/arr.length : null;
+const won = n => (n==null || isNaN(n)) ? '-' : Math.round(n).toLocaleString('ko-KR') + '원';
+const go = h => { location.hash = h; };
+function num(v){ if(v===''||v==null) return null; const n = Number(String(v).replace(/[^0-9.\-]/g,'')); return isNaN(n) ? null : n; }
+function pad(n){ return String(n).padStart(2,'0'); }
+function todayStr(d=new Date()){ return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`; }
+function parseLocal(s){ const [y,m,d] = String(s).split('-').map(Number); return new Date(y, (m||1)-1, d||1); }
+function addDays(s, n){ const d = parseLocal(s); d.setDate(d.getDate()+n); return todayStr(d); }
+function fmtDate(s){ if(!s) return ''; const [y,m,d] = s.split('-'); return `${y}.${m}.${d}`; }
+function fmtDateShort(s){ if(!s) return ''; const [,m,d] = s.split('-'); return `${Number(m)}/${Number(d)}`; }
+function haversine(a, b){
+  const R = 6371, r = x => x*Math.PI/180;
+  const dLat = r(b.lat-a.lat), dLng = r(b.lng-a.lng);
+  const h = Math.sin(dLat/2)**2 + Math.cos(r(a.lat))*Math.cos(r(b.lat))*Math.sin(dLng/2)**2;
+  return 2*R*Math.asin(Math.sqrt(h));
+}
+function kmText(k){ return k < 1 ? `${Math.round(k*1000)}m` : `${k.toFixed(1)}km`; }
+function uuid(){ return (crypto.randomUUID ? crypto.randomUUID() : 'x'+Date.now()+Math.random().toString(16).slice(2)); }
+function lsGet(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }
+function lsSet(k, v){ try { localStorage.setItem(k, v); } catch(e){} }
+let toastTimer;
+function toast(msg){ const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(()=>t.classList.remove('show'), 2400); }
+function tierOf(cat, amt){ if(amt==null) return null; const b = TIERS[cat]; return amt < b[0] ? 1 : amt < b[1] ? 2 : amt < b[2] ? 3 : 4; }
+function tierText(t){ return t ? '₩'.repeat(t) : ''; }
+function gradeBadge(g, big=false){ if(!g || !GRADES[g]) return ''; const G = GRADES[g]; return `<span class="grade ${big?'big':''}" style="background:${G.color}">${G.short}${big?' '+G.label:''}</span>`; }
+function statusBadge(s){ return `<span class="status">${STATUS[s]||''}</span>`; }
+function whoName(id){ return `<span class="who${id}">${PROFILES[id]?.name||''}</span>`; }
+function isStandalone(){ return window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true; }
+function isIOS(){ return /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform==='MacIntel' && navigator.maxTouchPoints>1); }
+function naverMapUrl(p){ return `https://map.naver.com/p/search/${encodeURIComponent((p.name||'')+' '+(p.region||''))}`; }
+function kakaoMapUrl(p){ return p.kakao_place_id ? `https://place.map.kakao.com/${p.kakao_place_id}` : `https://map.kakao.com/?q=${encodeURIComponent(p.name||'')}`; }
+
+/* ===================== 데이터 조회 ===================== */
+const placeById = id => S.places.find(p => p.id === id);
+const byDateDesc = (a,b) => (b.visited_at||'').localeCompare(a.visited_at||'') || (b.created_at||'').localeCompare(a.created_at||'');
+const visitsOf = pid => S.visits.filter(v => v.place_id === pid).sort(byDateDesc);
+const scoresOf = vid => S.scores.filter(s => s.visit_id === vid);
+const paysOf = vid => S.payments.filter(p => p.visit_id === vid);
+const itemsOf = vid => S.items.filter(i => i.visit_id === vid).sort((a,b)=>a.sort_order-b.sort_order);
+const photosOfVisit = vid => S.photos.filter(p => p.visit_id === vid).sort((a,b)=>(a.created_at||'').localeCompare(b.created_at||''));
+function photosOfPlace(pid){ const ids = new Set(visitsOf(pid).map(v=>v.id)); return S.photos.filter(p => ids.has(p.visit_id)); }
+function coverOfVisit(vid){ const ph = photosOfVisit(vid).filter(p=>!p.is_receipt); return ph.find(p=>p.is_cover) || ph[0] || null; }
+function coverOfPlace(pid){ for(const v of visitsOf(pid)){ const c = coverOfVisit(v.id); if(c) return c; } return null; }
+function perUnit(v, cat){
+  if(v.total_amount == null) return null;
+  if(cat === 'stay') return v.nights ? v.total_amount / v.nights : v.total_amount;
+  return v.people ? v.total_amount / v.people : v.total_amount;
+}
+function placeAvgUnit(p){ return avg(visitsOf(p.id).map(v=>perUnit(v,p.category)).filter(x=>x!=null)); }
+function scoreAvg(sc){ if(!sc) return null; return avg(Object.values(sc.scores||{}).filter(x=>typeof x==='number')); }
+function thumbHtml(ph, fallbackIcon, cls='thumb'){ return `<div class="${cls}">${ph ? `<img data-path="${esc(ph.storage_path)}" alt="">` : fallbackIcon}</div>`; }
+function catIcon(c){ return CAT[c]?.icon || '📍'; }
+
+/* ===================== Supabase ===================== */
+function initSupabase(){
+  if(!CONFIG.SUPABASE_URL || !CONFIG.SUPABASE_KEY || !window.supabase) return false;
+  sb = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_KEY, { auth:{ persistSession:true, autoRefreshToken:true } });
+  return true;
+}
+async function q(promise){ const { data, error } = await promise; if(error){ console.error(error); throw new Error(error.message); } return data; }
+async function loadAll(){
+  const tables = ['places','visits','visit_scores','visit_payments','visit_items','photos','trips','trip_stops'];
+  const res = await Promise.all(tables.map(t => sb.from(t).select('*').range(0, 9999)));
+  res.forEach((r,i) => { if(r.error) throw new Error(`${tables[i]}: ${r.error.message}`); });
+  [S.places, S.visits, S.scores, S.payments, S.items, S.photos, S.trips, S.stops] = res.map(r => r.data || []);
+  S.loaded = true; S.lastLoad = Date.now();
+}
+async function hydratePhotos(root=document){
+  if(!sb) return;
+  if(Date.now() - S.photoUrlsAt > 5*3600*1000){ S.photoUrls = {}; S.photoUrlsAt = Date.now(); }
+  const imgs = $$('img[data-path]', root);
+  const need = [...new Set(imgs.map(i=>i.dataset.path).filter(p => !S.photoUrls[p]))];
+  if(need.length){
+    const { data, error } = await sb.storage.from('photos').createSignedUrls(need, 6*3600);
+    if(!error && data) data.forEach(d => { if(d.signedUrl && d.path) S.photoUrls[d.path] = d.signedUrl; });
+  }
+  imgs.forEach(i => { const u = S.photoUrls[i.dataset.path]; if(u && i.getAttribute('src') !== u) i.src = u; });
+}
+async function resizeImage(file, max=1600, quality=0.8){
+  let src, w, h;
+  try { src = await createImageBitmap(file); w = src.width; h = src.height; }
+  catch(e){
+    src = await new Promise((res, rej) => { const im = new Image(); im.onload = () => res(im); im.onerror = rej; im.src = URL.createObjectURL(file); });
+    w = src.naturalWidth; h = src.naturalHeight;
+  }
+  const s = Math.min(1, max / Math.max(w, h));
+  const c = document.createElement('canvas'); c.width = Math.round(w*s); c.height = Math.round(h*s);
+  c.getContext('2d').drawImage(src, 0, 0, c.width, c.height);
+  return await new Promise(r => c.toBlob(r, 'image/jpeg', quality));
+}
+
+/* ===================== 카카오 ===================== */
+let kakaoPromise = null;
+function loadKakao(){
+  if(kakaoPromise) return kakaoPromise;
+  kakaoPromise = new Promise((res, rej) => {
+    if(!CONFIG.KAKAO_JS_KEY){ kakaoPromise = null; return rej(new Error('카카오 JavaScript 키가 설정되지 않았어요')); }
+    const s = document.createElement('script');
+    s.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${CONFIG.KAKAO_JS_KEY}&libraries=services&autoload=false`;
+    s.onload = () => { try { kakao.maps.load(() => res(window.kakao)); } catch(e){ kakaoPromise = null; rej(new Error('카카오 지도 초기화 실패 (도메인 등록, 카카오맵 사용 설정 확인)')); } };
+    s.onerror = () => { kakaoPromise = null; rej(new Error('카카오 지도를 불러오지 못했어요 (도메인 등록 확인)')); };
+    document.head.appendChild(s);
+  });
+  return kakaoPromise;
+}
+async function kakaoKeyword(query, opts={}){
+  const k = await loadKakao(); const ps = new k.maps.services.Places();
+  return new Promise(res => ps.keywordSearch(query, (data, status) => res(status === k.maps.services.Status.OK ? data : []), opts));
+}
+async function kakaoCategory(code, center, radiusM, page=1){
+  const k = await loadKakao(); const ps = new k.maps.services.Places();
+  return new Promise(res => ps.categorySearch(code, (data, status) => res(status === k.maps.services.Status.OK ? data : []), {
+    location: new k.maps.LatLng(center.lat, center.lng), radius: Math.min(20000, Math.round(radiusM)), page,
+  }));
+}
+async function geocode(text){
+  const k = await loadKakao(); const g = new k.maps.services.Geocoder();
+  const r = await new Promise(res => g.addressSearch(text, (d, st) => res(st === k.maps.services.Status.OK && d.length ? d[0] : null)));
+  if(r) return { lat:+r.y, lng:+r.x, address:r.address_name };
+  const kw = await kakaoKeyword(text);
+  if(kw.length) return { lat:+kw[0].y, lng:+kw[0].x, address:kw[0].address_name };
+  return null;
+}
+function regionFromAddress(addr){ const t = (addr||'').split(' ').filter(Boolean); return t.slice(0,2).join(' '); }
+function kakaoCatOf(d){
+  const c = d.category_group_code, n = d.category_name || '';
+  if(c === 'FD6' || c === 'CE7' || /^음식점/.test(n)) return 'food';
+  if(c === 'AD5' || /숙박/.test(n)) return 'stay';
+  return 'play';
+}
+function kakaoSubOf(d){ const segs = (d.category_name||'').split('>').map(s=>s.trim()).filter(Boolean); return segs.slice(1,3).join(' · ') || segs[0] || ''; }
+function kakaoToPlace(d){
+  return { name:d.place_name, category:kakaoCatOf(d), sub_category:kakaoSubOf(d), address:d.address_name||null,
+    road_address:d.road_address_name||null, lat:+d.y, lng:+d.x, kakao_place_id:String(d.id),
+    region:regionFromAddress(d.address_name), phone:d.phone||null };
+}
+function getPos(){
+  return new Promise((res, rej) => {
+    if(!navigator.geolocation) return rej(new Error('위치 기능을 쓸 수 없어요'));
+    navigator.geolocation.getCurrentPosition(p => { S.lastPos = { lat:p.coords.latitude, lng:p.coords.longitude }; res(S.lastPos); },
+      () => rej(new Error('위치 권한이 필요해요')), { enableHighAccuracy:false, timeout:10000, maximumAge:300000 });
+  });
+}
+
+/* ===================== 공통 화면 ===================== */
+const TABS = [['#/home','🏠','홈'],['#/guide','📖','가이드북'],['#/add','＋','기록'],['#/map','🗺️','지도'],['#/memory','📸','추억']];
+function shell(title, body, opts={}){
+  const path = (location.hash||'#/home').split('?')[0];
+  let tabKey = path;
+  if(path.startsWith('#/place') || path.startsWith('#/visit')) tabKey = '#/guide';
+  if(path.startsWith('#/trip')) tabKey = '#/home';
+  return `
+  <header class="top">
+    ${opts.back ? `<button class="icon-btn" onclick="goBack()" aria-label="뒤로">←</button>` : ''}
+    <h1>${title}</h1>
+    ${opts.actions || ''}
+    <button class="icon-btn" onclick="openSettings()" aria-label="설정">⚙️</button>
+  </header>
+  <main class="view ${opts.mapView ? 'map-view' : ''}">${body}</main>
+  <nav class="tabs"><div class="side-brand">보슐랭 가이드</div>
+    ${TABS.map(([h,i,l]) => `<a href="${h}" class="${h==='#/add'?'add ':''}${tabKey===h?'on':''}"><span class="i">${i}</span><span>${l}</span></a>`).join('')}
+  </nav>`;
+}
+function goBack(){ if(history.length > 1) history.back(); else go('#/home'); }
+function modal(html){
+  closeModal();
+  const bg = document.createElement('div'); bg.className = 'modal-bg'; bg.id = 'modalBg';
+  bg.innerHTML = `<div class="modal">${html}</div>`;
+  bg.addEventListener('click', e => { if(e.target === bg) closeModal(); });
+  document.body.appendChild(bg);
+  hydratePhotos(bg);
+}
+function closeModal(){ const m = $('#modalBg'); if(m) m.remove(); }
+function lightbox(path){
+  const d = document.createElement('div'); d.className = 'lightbox';
+  d.innerHTML = `<img src="${esc(S.photoUrls[path]||'')}" alt="">`;
+  d.onclick = () => d.remove(); document.body.appendChild(d);
+}
+function notFound(){ return { title:'보슐랭', body:'<div class="empty">찾을 수 없어요</div>', opts:{back:true} }; }
+
+/* ===================== 라우터 ===================== */
+const ROUTES = [
+  [/^#\/home$/, () => renderHome()],
+  [/^#\/guide$/, () => renderGuide()],
+  [/^#\/add$/, () => renderAdd()],
+  [/^#\/map$/, () => renderMap()],
+  [/^#\/memory$/, () => renderMemory()],
+  [/^#\/place\/([\w-]+)$/, m => renderPlace(m[1])],
+  [/^#\/visit\/new\/([\w-]+)$/, (m, qs) => renderVisitForm({ placeId:m[1], tripId:qs.get('trip') })],
+  [/^#\/visit\/edit\/([\w-]+)$/, m => renderVisitForm({ visitId:m[1] })],
+  [/^#\/trip\/new$/, () => renderTripNew()],
+  [/^#\/trip\/([\w-]+)$/, m => renderTrip(m[1])],
+];
+function renderRoute(){
+  const [path, qsStr] = (location.hash || '#/home').split('?');
+  const qs = new URLSearchParams(qsStr || '');
+  let r = null;
+  for(const [re, fn] of ROUTES){ const m = path.match(re); if(m){ r = fn(m, qs); break; } }
+  if(!r){ go('#/home'); return; }
+  $('#app').innerHTML = shell(r.title, r.body, r.opts || {});
+  hydratePhotos();
+  if(r.after) r.after();
+}
+
+/* ===================== 시작 ===================== */
+function parseShare(){
+  const p = new URLSearchParams(location.search);
+  if(p.has('share_url') || p.has('share_text') || p.has('share_title')){
+    S.pendingShare = { title:p.get('share_title')||'', text:p.get('share_text')||'', url:p.get('share_url')||'' };
+    history.replaceState(null, '', location.pathname + '#/add');
+  }
+}
+async function boot(){
+  parseShare();
+  try { navigator.serviceWorker?.register('./sw.js').catch(()=>{}); } catch(e){}
+  window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); S.installEvt = e; });
+  if(!initSupabase()){ renderSetup(); return; }
+  const { data } = await sb.auth.getSession();
+  S.session = data.session;
+  S.profile = Number(lsGet('bos_profile')) || null;
+  sb.auth.onAuthStateChange((ev, session) => { S.session = session; });
+  window.addEventListener('hashchange', () => {
+    if(!location.hash.startsWith('#/visit')) S.form = null;
+    closeModal(); main(); window.scrollTo(0, 0);
+  });
+  document.addEventListener('visibilitychange', async () => {
+    if(document.visibilityState !== 'visible' || !S.loaded) return;
+    if(Date.now() - S.lastLoad < 30000) return;
+    const path = location.hash.split('?')[0];
+    if(/^#\/(add|visit|trip\/new)/.test(path) || $('#modalBg')) return;
+    try { await loadAll(); renderRoute(); } catch(e){}
+  });
+  main();
+}
+async function main(){
+  if(!S.session) return renderLogin();
+  if(!S.profile) return renderPicker();
+  if(!S.loaded){
+    $('#app').innerHTML = `<div class="center-screen"><div class="logo-big">보슐랭<br><small>GUIDE</small></div><div class="spinner"></div></div>`;
+    try { await loadAll(); }
+    catch(e){
+      $('#app').innerHTML = `<div class="center-screen"><div class="empty">데이터를 불러오지 못했어요<br><small>${esc(e.message)}</small></div><button class="btn" onclick="location.reload()">다시 시도</button><button class="btn ghost" onclick="logout()">로그아웃</button></div>`;
+      return;
+    }
+  }
+  if(!location.hash){ location.replace('#/home'); return; }
+  renderRoute();
+}
+function renderSetup(){
+  $('#app').innerHTML = `<div class="center-screen"><div class="logo-big">보슐랭<br><small>GUIDE</small></div>
+  <div class="card" style="max-width:420px">
+    <b>설정이 필요해요</b>
+    <p class="meta">index.html 위쪽 <b>CONFIG</b> 부분에 Supabase URL, Supabase 키, 카카오 JavaScript 키를 넣어 주세요.</p>
+  </div></div>`;
+}
+function renderLogin(){
+  $('#app').innerHTML = `<div class="center-screen">
+    <div class="logo-big">보슐랭<br><small>GUIDE</small></div>
+    <div class="card" style="width:100%;max-width:360px">
+      <div class="field"><label>이메일</label><input id="l_email" type="email" autocomplete="username"></div>
+      <div class="field"><label>비밀번호</label><input id="l_pw" type="password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"></div>
+      <button class="btn primary full" id="l_btn" onclick="doLogin()">로그인</button>
+    </div></div>`;
+}
+async function doLogin(){
+  const btn = $('#l_btn'); btn.disabled = true; btn.textContent = '로그인 중…';
+  const { data, error } = await sb.auth.signInWithPassword({ email:$('#l_email').value.trim(), password:$('#l_pw').value });
+  if(error){ btn.disabled = false; btn.textContent = '로그인'; toast('이메일 또는 비밀번호를 확인해 주세요'); return; }
+  S.session = data.session; main();
+}
+function renderPicker(){
+  $('#app').innerHTML = `<div class="center-screen">
+    <div class="logo-big">보슐랭<br><small>GUIDE</small></div>
+    <div class="meta">누구인가요?</div>
+    <div class="pick">${[1,2].map(id => `<button style="background:${PROFILES[id].color}" onclick="setProfile(${id})">${PROFILES[id].name}</button>`).join('')}</div>
+    <div class="meta">이 기기에서는 계속 이 사람으로 기록돼요</div></div>`;
+}
+function setProfile(id){ S.profile = id; lsSet('bos_profile', String(id)); closeModal(); main(); }
+async function logout(){ await sb.auth.signOut(); S.session = null; S.loaded = false; closeModal(); renderLogin(); }
+
+/* ===================== 홈 ===================== */
+function renderHome(){
+  const today = todayStr(), ym = today.slice(0,7), now = parseLocal(today);
+  const mv = S.visits.filter(v => (v.visited_at||'').startsWith(ym));
+  const mvIds = new Set(mv.map(v=>v.id));
+  const paid = pid => sum(S.payments.filter(p => p.profile_id === pid && mvIds.has(p.visit_id)).map(p=>p.amount));
+  const recent = [...S.visits].sort(byDateDesc).slice(0, 8);
+  const undone = S.visits.filter(v => !v.is_detail_done);
+  const upcoming = S.trips.filter(t => !t.start_date || (t.end_date||t.start_date) >= today)
+    .sort((a,b) => (a.start_date||'9999').localeCompare(b.start_date||'9999')).slice(0,3);
+
+  // 다녀오셨나요?
+  const ask = [];
+  S.trips.forEach(t => {
+    const end = t.end_date || t.start_date; if(!end || end > today) return;
+    S.stops.filter(s => s.trip_id === t.id).forEach(s => {
+      const p = placeById(s.place_id);
+      if(p && p.status === 'planned' && !S.visits.some(v => v.place_id === p.id && v.trip_id === t.id)) ask.push({ p, t });
+    });
+  });
+
+  // N년 전 오늘
+  const memories = S.visits.filter(v => {
+    const d = parseLocal(v.visited_at); if(d.getFullYear() >= now.getFullYear()) return false;
+    const same = new Date(now.getFullYear(), d.getMonth(), d.getDate());
+    return Math.abs(same - now) <= 3*864e5;
+  }).sort(byDateDesc).slice(0,4);
+
+  const wishes = S.places.filter(p => p.status !== 'visited');
+  let nearHtml = '';
+  if(S.ui.near){
+    nearHtml = S.ui.near.length ? S.ui.near.map(({p,d}) => placeItem(p, kmText(d))).join('') : '<div class="empty">5km 안에 위시가 없어요</div>';
+  }
+
+  const installCard = (!isStandalone() && lsGet('bos_install_hide') !== '1') ? `
+    <div class="alert" onclick="showInstallGuide()">📲 <span>홈 화면에 앱으로 설치하면 더 편해요 <b>설치 방법</b></span>
+    <button class="x" onclick="event.stopPropagation();lsSet('bos_install_hide','1');renderRoute()">✕</button></div>` : '';
+
+  const body = `
+  ${installCard}
+  <div class="hello">${PROFILES[S.profile].name}, 오늘은 어디 갈까요?</div>
+  <button class="random-btn" onclick="go('#/trip/new')"><span class="d">🎲</span><span><b>랜덤 여행 뽑기</b><small>지역만 정하면 코스를 짜 드려요</small></span></button>
+  ${ask.length ? ask.slice(0,3).map(({p,t}) => `<div class="alert" onclick="go('#/visit/new/${p.id}?trip=${t.id}')">🙋 <span><b>다녀오셨나요?</b> ${esc(p.name)} 기록하기</span></div>`).join('') : ''}
+  ${undone.length ? `<div class="alert" onclick="openUndone()">📝 <span>기록 마무리하기 <b>${undone.length}건</b></span></div>` : ''}
+
+  <div class="sec-title">이번 달 (${now.getMonth()+1}월)</div>
+  <div class="stat-row">
+    <div class="stat"><div class="n">${won(sum(mv.map(v=>v.total_amount)))}</div><div class="l">총 지출 · ${mv.length}회</div></div>
+    <div class="stat"><div class="n who1">${won(paid(1))}</div><div class="l">영웅이 낸 돈</div></div>
+    <div class="stat"><div class="n who2">${won(paid(2))}</div><div class="l">보실이 낸 돈</div></div>
+  </div>
+
+  ${upcoming.length ? `<div class="sec-title">다가오는 여행</div>${upcoming.map(tripItem).join('')}` : ''}
+
+  ${memories.length ? `<div class="sec-title">📅 N년 전 이맘때</div><div class="hscroll">${memories.map(v => {
+    const p = placeById(v.place_id); const yrs = now.getFullYear() - parseLocal(v.visited_at).getFullYear();
+    return miniCard(p, coverOfVisit(v.id), `${yrs}년 전 · ${fmtDateShort(v.visited_at)}`);
+  }).join('')}</div>` : ''}
+
+  <div class="sec-title">최근 방문 <button class="link" onclick="go('#/memory')">전체</button></div>
+  ${recent.length ? `<div class="hscroll">${recent.map(v => { const p = placeById(v.place_id); return miniCard(p, coverOfVisit(v.id), fmtDate(v.visited_at)); }).join('')}</div>`
+    : `<div class="card empty">아직 기록이 없어요.<br>가운데 <b>＋</b> 버튼으로 첫 기록을 남겨 보세요!</div>`}
+
+  <div class="sec-title">💭 가고 싶은 곳 ${wishes.length}곳 <button class="link" onclick="findNear()">📍 근처 위시 찾기</button></div>
+  ${nearHtml || (wishes.length ? wishes.slice(0,3).map(p => placeItem(p)).join('') + (wishes.length>3 ? `<button class="btn full" onclick="S.ui.guide.seg='wish';go('#/guide')">전체 보기</button>` : '') : '<div class="meta">공유하기나 ＋ 버튼으로 가고 싶은 곳을 모아 보세요</div>')}
+  `;
+  return { title:'<span class="brand">보슐랭</span> 가이드', body };
+}
+function miniCard(p, ph, sub){
+  if(!p) return '';
+  return `<div class="mini" onclick="go('#/place/${p.id}')">${thumbHtml(ph, catIcon(p.category), 'mimg')}
+    <div class="mb"><div class="mn">${esc(p.name)}</div><div class="meta">${gradeBadge(p.grade)} ${esc(sub||'')}</div></div></div>`;
+}
+function tripItem(t){
+  const n = S.stops.filter(s => s.trip_id === t.id).length;
+  const date = t.start_date ? (t.end_date && t.end_date !== t.start_date ? `${fmtDate(t.start_date)} ~ ${fmtDateShort(t.end_date)}` : fmtDate(t.start_date)) : '날짜 미정';
+  return `<div class="pitem" onclick="go('#/trip/${t.id}')"><div class="thumb">${t.is_random?'🎲':'🧳'}</div>
+    <div class="pbody"><div class="pname">${esc(t.title)}</div><div class="meta">${date} · ${n}곳 · ${MODE_LABEL[t.mode]||''}</div></div></div>`;
+}
+async function findNear(){
+  try { const pos = await getPos();
+    S.ui.near = S.places.filter(p => p.status !== 'visited' && p.lat).map(p => ({ p, d:haversine(pos, p) })).filter(x => x.d <= 5).sort((a,b)=>a.d-b.d).slice(0,10);
+    renderRoute();
+  } catch(e){ toast(e.message); }
+}
+function openUndone(){
+  const list = S.visits.filter(v => !v.is_detail_done).sort(byDateDesc);
+  modal(`<h3>기록 마무리하기</h3><div class="meta" style="margin-bottom:10px">메뉴, 추가 비용, 점수를 채우고 '상세 기록 완료'를 체크하면 사라져요</div>
+    ${list.map(v => { const p = placeById(v.place_id); return `<div class="pitem" onclick="closeModal();go('#/visit/edit/${v.id}')">
+      <div class="thumb">${catIcon(p?.category)}</div><div class="pbody"><div class="pname">${esc(p?.name||'')}</div><div class="meta">${fmtDate(v.visited_at)} · ${won(v.total_amount)}</div></div></div>`; }).join('')}`);
+}
+
+/* ===================== 가이드북 ===================== */
+function placeItem(p, extra=''){
+  const ph = coverOfPlace(p.id);
+  const vs = visitsOf(p.id);
+  const meta = p.status === 'visited'
+    ? `${catIcon(p.category)} ${esc(p.sub_category||CAT[p.category].label)} · ${esc(p.region||'')} · ${vs.length}회${vs[0] ? ' · '+fmtDateShort(vs[0].visited_at) : ''}`
+    : `${catIcon(p.category)} ${esc(p.region||'')}${p.source ? ' · '+esc(p.source) : ''}${p.expected_price ? ' · 예상 '+won(p.expected_price) : ''}`;
+  return `<div class="pitem" onclick="go('#/place/${p.id}')">${thumbHtml(ph, catIcon(p.category))}
+    <div class="pbody"><div class="pname">${esc(p.name)}</div>
+    <div style="margin:3px 0">${gradeBadge(p.grade)} <span class="tier">${tierText(p.price_tier)}</span> ${p.status!=='visited'?statusBadge(p.status):''} ${extra?`<span class="meta">${esc(extra)}</span>`:''}</div>
+    <div class="meta">${meta}</div></div></div>`;
+}
+function renderGuide(){
+  const g = S.ui.guide;
+  const regions = [...new Set(S.places.map(p=>p.region).filter(Boolean))].sort();
+  let list = S.places.filter(p => g.seg === 'visited' ? p.status === 'visited' : p.status !== 'visited');
+  if(g.cat !== 'all') list = list.filter(p => p.category === g.cat);
+  if(g.grade !== 'all') list = list.filter(p => g.grade === 'none' ? !p.grade : p.grade === g.grade);
+  if(g.tier !== 'all') list = list.filter(p => String(p.price_tier) === g.tier);
+  if(g.region !== 'all') list = list.filter(p => p.region === g.region);
+  if(g.q) list = list.filter(p => (p.name+' '+(p.sub_category||'')+' '+(p.memo||'')+' '+(p.tags||[]).join(' ')).toLowerCase().includes(g.q.toLowerCase()));
+  const last = p => visitsOf(p.id)[0]?.visited_at || '';
+  const sorters = {
+    recent: (a,b) => (last(b)||b.created_at).localeCompare(last(a)||a.created_at),
+    grade: (a,b) => (GRADE_ORDER.indexOf(a.grade)+1||99) - (GRADE_ORDER.indexOf(b.grade)+1||99),
+    count: (a,b) => visitsOf(b.id).length - visitsOf(a.id).length,
+    price_low: (a,b) => (a.price_tier||9) - (b.price_tier||9),
+    price_high: (a,b) => (b.price_tier||0) - (a.price_tier||0),
+    added: (a,b) => (b.created_at||'').localeCompare(a.created_at||''),
+  };
+  list.sort(sorters[g.sort] || sorters.recent);
+  const cnt = { visited:S.places.filter(p=>p.status==='visited').length, wish:S.places.filter(p=>p.status!=='visited').length };
+  const body = `
+  <div class="seg">
+    <button class="${g.seg==='visited'?'on':''}" onclick="setGuide('seg','visited')">가본 곳 ${cnt.visited}</button>
+    <button class="${g.seg==='wish'?'on':''}" onclick="setGuide('seg','wish')">가고 싶은 곳 ${cnt.wish}</button>
+  </div>
+  <div class="chips">
+    ${[['all','전체'],['food','🍽️ 음식'],['play','🎡 놀거리'],['stay','🏨 숙박']].map(([k,l]) => `<button class="chip ${g.cat===k?'on':''}" onclick="setGuide('cat','${k}')">${l}</button>`).join('')}
+  </div>
+  <div class="row" style="margin-bottom:8px">
+    <select onchange="setGuide('grade',this.value)"><option value="all">등급 전체</option>${GRADE_ORDER.map(k=>`<option value="${k}" ${g.grade===k?'selected':''}>${GRADES[k].short} ${GRADES[k].label}</option>`).join('')}<option value="none" ${g.grade==='none'?'selected':''}>등급 없음</option></select>
+    <select onchange="setGuide('tier',this.value)"><option value="all">가격대 전체</option>${[1,2,3,4].map(t=>`<option value="${t}" ${g.tier===String(t)?'selected':''}>${tierText(t)}</option>`).join('')}</select>
+  </div>
+  <div class="row" style="margin-bottom:8px">
+    <select onchange="setGuide('region',this.value)"><option value="all">지역 전체</option>${regions.map(r=>`<option ${g.region===r?'selected':''}>${esc(r)}</option>`).join('')}</select>
+    <select onchange="setGuide('sort',this.value)">${[['recent','최근 방문순'],['grade','등급순'],['count','방문 횟수순'],['price_low','가격 낮은순'],['price_high','가격 높은순'],['added','최근 추가순']].map(([k,l])=>`<option value="${k}" ${g.sort===k?'selected':''}>${l}</option>`).join('')}</select>
+  </div>
+  <input placeholder="🔎 이름, 메모, 태그 검색" value="${esc(g.q)}" oninput="S.ui.guide.q=this.value;clearTimeout(window._gq);window._gq=setTimeout(()=>{renderRoute();const i=$('main input');if(i){i.focus();i.setSelectionRange(i.value.length,i.value.length)}},350)" style="margin-bottom:12px">
+  ${list.length ? list.map(p => placeItem(p)).join('') : `<div class="empty">${g.seg==='visited' ? '조건에 맞는 곳이 없어요' : '가고 싶은 곳을 추가해 보세요'}</div>`}
+  `;
+  return { title:'가이드북', body };
+}
+function setGuide(k, v){ S.ui.guide[k] = v; renderRoute(); }
+
+/* ===================== 장소 추가 (＋) ===================== */
+function guessSource(url){
+  if(!url) return '';
+  if(/youtu/.test(url)) return '유튜브';
+  if(/instagram|instagr\.am/.test(url)) return '인스타';
+  if(/blog\.naver/.test(url)) return '네이버 블로그';
+  if(/naver/.test(url)) return '네이버 방문자리뷰';
+  return '기타';
+}
+function handleSharedText(text, title='', url=''){
+  const all = [title, text, url].join('\n');
+  const found = url || (all.match(/https?:\/\/\S+/) || [''])[0];
+  const lines = [title, ...String(text||'').split('\n')]
+    .map(l => l.replace(/^\[[^\]]*\]\s*/, '').trim())
+    .filter(l => l && !/^https?:\/\//.test(l) && l.length < 40);
+  S.addCtx = { source_url:found || S.addCtx.source_url, source:guessSource(found) || S.addCtx.source, q:lines[0] || S.addCtx.q };
+}
+function renderAdd(){
+  let autoSearch = false;
+  if(S.pendingShare){ const sh = S.pendingShare; S.pendingShare = null; handleSharedText(sh.text, sh.title, sh.url); autoSearch = !!S.addCtx.q; }
+  const c = S.addCtx;
+  const body = `
+  <div class="card">
+    <div class="field" style="margin-bottom:8px"><label>장소 검색</label>
+      <div class="row"><input id="addq" placeholder="가게·장소 이름 (예: 시흥 삼겹살)" value="${esc(c.q)}" onkeydown="if(event.key==='Enter')doAddSearch()" style="flex:3"><button class="btn primary" onclick="doAddSearch()" style="flex:1">검색</button></div>
+    </div>
+    <div class="row">
+      <button class="btn sm" onclick="pasteClipboard()">📋 링크 붙여넣기</button>
+      <button class="btn sm" onclick="openManualAdd()">✏️ 직접 입력</button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="meta" style="margin-bottom:8px"><b>알게 된 경로</b> (새로 추가하는 장소에 저장돼요)</div>
+    <div class="row">
+      <select id="add_src" onchange="S.addCtx.source=this.value"><option value="">선택 안 함</option>${SOURCES.map(s=>`<option ${c.source===s?'selected':''}>${s}</option>`).join('')}</select>
+    </div>
+    <input id="add_url" placeholder="참고 링크 (블로그·유튜브·지도 등)" value="${esc(c.source_url)}" oninput="S.addCtx.source_url=this.value;const g=guessSource(this.value);if(g&&!S.addCtx.source){S.addCtx.source=g;$('#add_src').value=g}" style="margin-top:8px">
+  </div>
+  <div id="addres"></div>`;
+  return { title:'기록하기', body, after: () => { if(autoSearch) doAddSearch(); else if(!c.q) $('#addq')?.focus(); } };
+}
+async function pasteClipboard(){
+  try {
+    const t = await navigator.clipboard.readText();
+    if(!t){ toast('클립보드가 비어 있어요'); return; }
+    handleSharedText(t); renderRoute();
+    if(S.addCtx.q) doAddSearch();
+  } catch(e){ toast('클립보드를 읽을 수 없어요. 아래 링크 칸을 길게 눌러 붙여넣어 주세요'); $('#add_url')?.focus(); }
+}
+async function doAddSearch(){
+  const qv = $('#addq').value.trim(); S.addCtx.q = qv;
+  if(!qv){ toast('검색어를 입력해 주세요'); return; }
+  const box = $('#addres'); box.innerHTML = '<div class="center" style="padding:20px"><div class="spinner" style="margin:auto"></div></div>';
+  const mine = S.places.filter(p => p.name.toLowerCase().includes(qv.toLowerCase())).slice(0,5);
+  let res = [];
+  try { res = await kakaoKeyword(qv); }
+  catch(e){ box.innerHTML = `<div class="card empty">${esc(e.message)}</div>`; return; }
+  S.addResults = res;
+  const owned = new Map(S.places.filter(p=>p.kakao_place_id).map(p => [p.kakao_place_id, p]));
+  box.innerHTML = `
+  ${mine.length ? `<div class="sec-title">내 가이드북에 있는 곳</div>${mine.map(p => `
+    <div class="pitem"><div class="thumb">${catIcon(p.category)}</div><div class="pbody" onclick="go('#/place/${p.id}')"><div class="pname">${esc(p.name)}</div><div class="meta">${esc(p.region||'')} ${STATUS[p.status]}</div></div>
+    <button class="btn sm primary" onclick="go('#/visit/new/${p.id}')">방문 추가</button></div>`).join('')}` : ''}
+  <div class="sec-title">검색 결과 ${res.length}곳</div>
+  ${res.length ? res.map((d,i) => { const own = owned.get(String(d.id)); return `
+    <div class="card" style="padding:12px">
+      <div class="pname">${catIcon(kakaoCatOf(d))} ${esc(d.place_name)}</div>
+      <div class="meta">${esc(kakaoSubOf(d))} · ${esc(d.road_address_name || d.address_name)}</div>
+      <div class="row" style="margin-top:8px">${own
+        ? `<button class="btn sm" onclick="go('#/place/${own.id}')">이미 있음 · 보기</button><button class="btn sm primary" onclick="go('#/visit/new/${own.id}')">방문 추가</button>`
+        : `<button class="btn sm primary" onclick="addFromKakao(${i},'visit')">✅ 다녀왔어요</button><button class="btn sm" onclick="addFromKakao(${i},'wish')">💭 가고 싶어요</button>`}
+      </div></div>`; }).join('') : '<div class="empty">검색 결과가 없어요. ✏️ 직접 입력을 써 보세요</div>'}`;
+}
+async function addFromKakao(i, mode){
+  const d = S.addResults[i]; if(!d) return;
+  const row = { ...kakaoToPlace(d), status:'wish', source:S.addCtx.source||null, source_url:S.addCtx.source_url||null, created_by:S.profile };
+  if(mode === 'wish'){ openWishModal(row); return; }
+  try {
+    const ins = await q(sb.from('places').insert(row).select().single());
+    S.places.push(ins); resetAddCtx();
+    go('#/visit/new/' + ins.id);
+  } catch(e){ toast('저장 실패: ' + e.message); }
+}
+function resetAddCtx(){ S.addCtx = { source:'', source_url:'', q:'' }; S.addResults = []; }
+function openWishModal(row){
+  S._wishRow = row;
+  modal(`<h3>💭 가고 싶은 곳 저장</h3>
+    <div class="card" style="padding:12px"><b>${catIcon(row.category)} ${esc(row.name)}</b><div class="meta">${esc(row.address||'')}</div></div>
+    <div class="field"><label>알게 된 경로</label><select id="w_src"><option value="">선택 안 함</option>${SOURCES.map(s=>`<option ${row.source===s?'selected':''}>${s}</option>`).join('')}</select></div>
+    <div class="field"><label>참고 링크</label><input id="w_url" value="${esc(row.source_url||'')}"></div>
+    <div class="row"><div class="field"><label>기대 메뉴·포인트</label><input id="w_menu" placeholder="예: 숙성 삼겹살"></div>
+    <div class="field"><label>예상 금액 (${row.category==='stay'?'1박':'1인'})</label><input id="w_price" inputmode="numeric"></div></div>
+    <div class="field"><label>메모</label><textarea id="w_memo" placeholder="웨이팅 김, 평일 추천, 주차 X 등"></textarea></div>
+    <button class="btn primary full" id="w_btn" onclick="saveWish()">저장</button>`);
+}
+async function saveWish(){
+  const row = { ...S._wishRow, source:$('#w_src').value||null, source_url:$('#w_url').value.trim()||null,
+    expected_menu:$('#w_menu').value.trim()||null, expected_price:num($('#w_price').value), memo:$('#w_memo').value.trim()||null, status:'wish' };
+  $('#w_btn').disabled = true;
+  try { const ins = await q(sb.from('places').insert(row).select().single()); S.places.push(ins); closeModal(); resetAddCtx(); toast('위시에 저장했어요'); go('#/place/' + ins.id); }
+  catch(e){ $('#w_btn').disabled = false; toast('저장 실패: ' + e.message); }
+}
+function openManualAdd(){
+  modal(`<h3>✏️ 직접 입력</h3>
+    <div class="field"><label>이름</label><input id="m_name" value="${esc(S.addCtx.q)}"></div>
+    <div class="field"><label>카테고리</label><select id="m_cat">${Object.entries(CAT).map(([k,v])=>`<option value="${k}">${v.icon} ${v.label}</option>`).join('')}</select></div>
+    <div class="field"><label>세부 분류</label><input id="m_sub" placeholder="예: 한식, 방탈출, 펜션"></div>
+    <div class="field"><label>주소 (입력하면 지도에 표시돼요)</label><input id="m_addr" placeholder="예: 경기 시흥시 정왕동 1234"></div>
+    <div class="row"><button class="btn primary" onclick="saveManual('visit')">✅ 다녀왔어요</button><button class="btn" onclick="saveManual('wish')">💭 가고 싶어요</button></div>`);
+}
+async function saveManual(mode){
+  const name = $('#m_name').value.trim(); if(!name){ toast('이름을 입력해 주세요'); return; }
+  const addr = $('#m_addr').value.trim();
+  const row = { name, category:$('#m_cat').value, sub_category:$('#m_sub').value.trim()||null, address:addr||null,
+    status:'wish', source:S.addCtx.source||null, source_url:S.addCtx.source_url||null, created_by:S.profile };
+  if(addr){ try { const g = await geocode(addr); if(g){ row.lat = g.lat; row.lng = g.lng; row.region = regionFromAddress(g.address||addr); } } catch(e){} }
+  if(!row.region && addr) row.region = regionFromAddress(addr);
+  if(mode === 'wish'){ openWishModal(row); return; }
+  try { const ins = await q(sb.from('places').insert(row).select().single()); S.places.push(ins); closeModal(); resetAddCtx(); go('#/visit/new/' + ins.id); }
+  catch(e){ toast('저장 실패: ' + e.message); }
+}
+
+/* ===================== 장소 상세 ===================== */
+function renderPlace(id){
+  const p = placeById(id); if(!p) return notFound();
+  const tab = S.ui.placeTab[id] || (p.status === 'visited' ? 'visits' : 'info');
+  const vs = visitsOf(id);
+  const cover = coverOfPlace(id);
+  const avgUnit = placeAvgUnit(p);
+  let content = '';
+
+  if(tab === 'info'){
+    // 세부 점수 평균 (사람별)
+    const scoreTable = [1,2].map(pid => {
+      const ss = vs.map(v => scoresOf(v.id).find(s => s.profile_id === pid)).filter(Boolean);
+      if(!ss.length) return '';
+      return `<div class="kv"><span>${whoName(pid)}</span><span>${SCORE_ITEMS[p.category].map(k => { const a = avg(ss.map(s=>s.scores?.[k]).filter(x=>typeof x==='number')); return a!=null ? `${esc(k)} ${a.toFixed(1)}` : ''; }).filter(Boolean).join(' · ') || '-'}</span></div>`;
+    }).join('');
+    // 메뉴 가격 변화
+    const itemsAll = vs.slice().reverse().flatMap(v => itemsOf(v.id).map(it => ({ ...it, date:v.visited_at })));
+    const byName = {};
+    itemsAll.forEach(it => { if(!it.name) return; (byName[it.name] = byName[it.name] || []).push(it); });
+    const menuRows = Object.entries(byName).map(([name, arr]) => {
+      const prices = arr.map(a=>a.price).filter(x=>x!=null);
+      const rec = arr.some(a=>a.is_recommend);
+      const first = prices[0], lastP = prices[prices.length-1];
+      const priceTxt = prices.length ? (first !== lastP ? `${won(first)} → <b>${won(lastP)}</b>` : won(lastP)) : '-';
+      return { name, rec, n:arr.length, html:`<div class="kv"><span>${rec?'👍 ':''}${esc(name)}${arr.length>1?` <small class="meta">×${arr.length}</small>`:''}</span><span>${priceTxt}</span></div>` };
+    }).sort((a,b) => (b.rec-a.rec) || (b.n-a.n)).map(x=>x.html).join('');
+    const expected = p.expected_price;
+    const diff = (expected && avgUnit) ? Math.round((avgUnit-expected)/expected*100) : null;
+
+    content = `
+    <div class="card">
+      ${p.address ? `<div class="kv"><span>주소</span><span>${esc(p.road_address || p.address)}</span></div>` : ''}
+      ${p.phone ? `<div class="kv"><span>전화</span><span><a href="tel:${esc(p.phone)}">${esc(p.phone)}</a></span></div>` : ''}
+      <div class="kv"><span>평균 ${p.category==='stay'?'1박':'1인'}</span><span>${avgUnit!=null ? won(avgUnit) : '-'} <span class="tier">${tierText(p.price_tier)}</span></span></div>
+      ${p.source ? `<div class="kv"><span>알게 된 경로</span><span>${esc(p.source)}${p.source_url ? ` · <a href="${esc(p.source_url)}" target="_blank" rel="noopener">링크</a>` : ''}</span></div>` : (p.source_url ? `<div class="kv"><span>참고 링크</span><span><a href="${esc(p.source_url)}" target="_blank" rel="noopener">열기</a></span></div>` : '')}
+      ${p.expected_menu ? `<div class="kv"><span>기대 포인트</span><span>${esc(p.expected_menu)}</span></div>` : ''}
+      ${expected ? `<div class="kv"><span>예상 vs 실제</span><span>${won(expected)} → ${avgUnit!=null ? `<b>${won(avgUnit)}</b> (${diff>0?'+':''}${diff}%)` : '아직 몰라요'}</span></div>` : ''}
+      ${(p.tags||[]).length ? `<div class="kv"><span>태그</span><span>${p.tags.map(t=>'#'+esc(t)).join(' ')}</span></div>` : ''}
+      ${p.memo ? `<div style="margin-top:8px;font-size:14px;white-space:pre-wrap">${esc(p.memo)}</div>` : ''}
+    </div>
+    ${scoreTable ? `<div class="sec-title">평균 세부 점수</div><div class="card">${scoreTable}</div>` : ''}
+    ${menuRows ? `<div class="sec-title">${ITEM_LABEL[p.category]} · 가격 변화</div><div class="card">${menuRows}</div>` : ''}
+    <div class="row"><a class="btn" href="${naverMapUrl(p)}" target="_blank" rel="noopener">네이버지도</a><a class="btn" href="${kakaoMapUrl(p)}" target="_blank" rel="noopener">카카오맵</a></div>`;
+  } else if(tab === 'visits'){
+    content = vs.length ? vs.map(v => visitCard(v, p)).join('') : `<div class="empty">아직 방문 기록이 없어요</div>`;
+  } else {
+    const phs = photosOfPlace(id);
+    content = phs.length ? `<div class="pgrid">${phs.map(ph => `<img data-path="${esc(ph.storage_path)}" onclick="lightbox('${esc(ph.storage_path)}')" alt="">`).join('')}</div>` : `<div class="empty">사진이 없어요</div>`;
+  }
+
+  const body = `
+  <div class="hero">${cover ? `<img data-path="${esc(cover.storage_path)}" alt="">` : catIcon(p.category)}</div>
+  <div class="pd-name">${esc(p.name)}</div>
+  <div style="margin-bottom:6px">${gradeBadge(p.grade, true)} <span class="tier" style="font-size:15px">${tierText(p.price_tier)}</span> ${statusBadge(p.status)}</div>
+  <div class="meta" style="margin-bottom:12px">${catIcon(p.category)} ${esc(p.sub_category || CAT[p.category].label)} · ${esc(p.region||'')} · 방문 ${vs.length}회${p.created_by ? ' · '+PROFILES[p.created_by].name+'가 추가' : ''}</div>
+  <div class="row" style="margin-bottom:14px">
+    <button class="btn primary" onclick="go('#/visit/new/${p.id}')">＋ 방문 기록</button>
+    <button class="btn" onclick="openGradePicker('${p.id}')">🏅 등급</button>
+    <button class="btn" onclick="openPlaceEdit('${p.id}')">✏️ 수정</button>
+  </div>
+  <div class="seg">
+    ${[['info','정보'],['visits',`방문기록 ${vs.length}`],['photos','사진']].map(([k,l]) => `<button class="${tab===k?'on':''}" onclick="S.ui.placeTab['${p.id}']='${k}';renderRoute()">${l}</button>`).join('')}
+  </div>
+  ${content}`;
+  return { title:esc(p.name), body, opts:{back:true} };
+}
+function visitCard(v, p, showPlace=false){
+  const scs = scoresOf(v.id), pays = paysOf(v.id), its = itemsOf(v.id), phs = photosOfVisit(v.id);
+  const unit = perUnit(v, p.category);
+  const extras = Object.entries(v.extra_costs || {});
+  const trip = v.trip_id ? S.trips.find(t => t.id === v.trip_id) : null;
+  return `<div class="vcard">
+    <div class="vhead"><div>${showPlace ? `<b onclick="go('#/place/${p.id}')" style="cursor:pointer">${catIcon(p.category)} ${esc(p.name)}</b><br>` : ''}<b>${fmtDate(v.visited_at)}</b> <span class="meta">${esc(v.companions)}${v.created_by?' · '+PROFILES[v.created_by].name+' 작성':''}</span></div>
+      <button class="btn sm" onclick="go('#/visit/edit/${v.id}')">수정</button></div>
+    ${trip ? `<div class="meta" style="margin-bottom:4px">🧳 <a href="#/trip/${trip.id}">${esc(trip.title)}</a></div>` : ''}
+    <div class="meta">총 ${won(v.total_amount)}${unit!=null ? ` · ${p.category==='stay' ? '1박' : '1인'} ${won(unit)}` : ''}${p.category==='stay' && v.nights ? ` · ${v.nights}박` : ''}${v.booking_channel ? ' · '+esc(v.booking_channel) : ''}${v.wait_minutes ? ` · 웨이팅 ${v.wait_minutes}분` : ''}</div>
+    ${pays.length ? `<div class="meta">${pays.map(x => `${whoName(x.profile_id)} ${won(x.amount)}`).join(' · ')}</div>` : ''}
+    ${scs.map(s => { const a = scoreAvg(s); return (a!=null || s.one_line) ? `<div class="oneline">${whoName(s.profile_id)} ${a!=null ? `<b>${a.toFixed(1)}</b>점` : ''} ${s.one_line ? '“'+esc(s.one_line)+'”' : ''}</div>` : ''; }).join('')}
+    ${its.length ? `<div class="meta" style="margin-top:4px">${its.map(i => `${i.is_recommend?'👍':''}${esc(i.name)}${i.price!=null?' '+won(i.price):''}${i.qty>1?'×'+i.qty:''}`).join(' · ')}</div>` : ''}
+    ${extras.length ? `<div class="meta">추가: ${extras.map(([k,val]) => `${esc(k)} ${won(val)}`).join(' · ')}</div>` : ''}
+    ${phs.length ? `<div class="pgrid" style="margin-top:8px">${phs.slice(0,6).map(ph => `<img data-path="${esc(ph.storage_path)}" onclick="lightbox('${esc(ph.storage_path)}')" alt="">`).join('')}</div>` : ''}
+    ${!v.is_detail_done ? `<div class="meta" style="margin-top:6px;color:var(--red)">📝 상세 기록 미완료</div>` : ''}
+  </div>`;
+}
+function openGradePicker(pid){
+  const p = placeById(pid);
+  modal(`<h3>🏅 보슐랭 등급 (둘이 합의)</h3>
+    ${GRADE_ORDER.map(g => `<div class="pitem" onclick="setGrade('${pid}','${g}')" style="${p.grade===g?'border-color:'+GRADES[g].color+';border-width:2px':''}">
+      <div class="thumb" style="background:${GRADES[g].color};color:#fff;font-size:18px;font-weight:800">${GRADES[g].short}</div>
+      <div class="pbody"><div class="pname">${GRADES[g].label}</div><div class="meta">${GRADES[g].desc}</div></div></div>`).join('')}
+    ${p.grade ? `<button class="btn ghost full" onclick="setGrade('${pid}',null)">등급 지우기</button>` : ''}`);
+}
+async function setGrade(pid, g){
+  try { await q(sb.from('places').update({ grade:g }).eq('id', pid)); placeById(pid).grade = g; closeModal(); renderRoute(); toast(g ? GRADES[g].label + ' 부여!' : '등급을 지웠어요'); }
+  catch(e){ toast('저장 실패: ' + e.message); }
+}
+function openPlaceEdit(pid){
+  const p = placeById(pid);
+  modal(`<h3>장소 정보 수정</h3>
+    <div class="field"><label>이름</label><input id="e_name" value="${esc(p.name)}"></div>
+    <div class="row"><div class="field"><label>카테고리</label><select id="e_cat">${Object.entries(CAT).map(([k,v])=>`<option value="${k}" ${p.category===k?'selected':''}>${v.icon} ${v.label}</option>`).join('')}</select></div>
+    <div class="field"><label>상태</label><select id="e_status">${Object.entries(STATUS).map(([k,v])=>`<option value="${k}" ${p.status===k?'selected':''}>${v}</option>`).join('')}</select></div></div>
+    <div class="row"><div class="field"><label>세부 분류</label><input id="e_sub" value="${esc(p.sub_category||'')}"></div>
+    <div class="field"><label>지역</label><input id="e_region" value="${esc(p.region||'')}"></div></div>
+    <div class="field"><label>주소</label><input id="e_addr" value="${esc(p.address||'')}"></div>
+    <div class="row"><div class="field"><label>알게 된 경로</label><select id="e_src"><option value="">선택 안 함</option>${SOURCES.map(s=>`<option ${p.source===s?'selected':''}>${s}</option>`).join('')}</select></div>
+    <div class="field"><label>예상 금액</label><input id="e_price" inputmode="numeric" value="${p.expected_price??''}"></div></div>
+    <div class="field"><label>참고 링크</label><input id="e_url" value="${esc(p.source_url||'')}"></div>
+    <div class="field"><label>기대 메뉴·포인트</label><input id="e_menu" value="${esc(p.expected_menu||'')}"></div>
+    <div class="field"><label>태그 (쉼표로 구분)</label><input id="e_tags" value="${esc((p.tags||[]).join(', '))}" placeholder="데이트, 주차가능, 노키즈"></div>
+    <div class="field"><label>메모</label><textarea id="e_memo">${esc(p.memo||'')}</textarea></div>
+    <button class="btn primary full" onclick="savePlaceEdit('${pid}')">저장</button>
+    <button class="btn danger full" onclick="deletePlace('${pid}')">장소 삭제</button>`);
+}
+async function savePlaceEdit(pid){
+  const p = placeById(pid);
+  const patch = { name:$('#e_name').value.trim()||p.name, category:$('#e_cat').value, status:$('#e_status').value,
+    sub_category:$('#e_sub').value.trim()||null, region:$('#e_region').value.trim()||null, address:$('#e_addr').value.trim()||null,
+    source:$('#e_src').value||null, expected_price:num($('#e_price').value), source_url:$('#e_url').value.trim()||null,
+    expected_menu:$('#e_menu').value.trim()||null, memo:$('#e_memo').value.trim()||null,
+    tags:$('#e_tags').value.split(',').map(s=>s.trim()).filter(Boolean) };
+  if(patch.address && patch.address !== p.address){ try { const g = await geocode(patch.address); if(g){ patch.lat = g.lat; patch.lng = g.lng; } } catch(e){} }
+  try { await q(sb.from('places').update(patch).eq('id', pid)); Object.assign(p, patch);
+    await recomputePlace(pid, true); closeModal(); renderRoute(); toast('저장했어요'); }
+  catch(e){ toast('저장 실패: ' + e.message); }
+}
+async function deletePlace(pid){
+  const p = placeById(pid);
+  if(!confirm(`'${p.name}'과 모든 방문 기록·사진을 삭제할까요?`)) return;
+  try {
+    const paths = photosOfPlace(pid).map(ph => ph.storage_path);
+    if(paths.length) await sb.storage.from('photos').remove(paths);
+    await q(sb.from('places').delete().eq('id', pid));
+    await loadAll(); closeModal(); toast('삭제했어요'); go('#/guide');
+  } catch(e){ toast('삭제 실패: ' + e.message); }
+}
+async function recomputePlace(pid, keepStatus=false){
+  const p = placeById(pid); if(!p) return;
+  const tier = tierOf(p.category, placeAvgUnit(p));
+  const patch = {};
+  if(tier !== p.price_tier) patch.price_tier = tier;
+  if(!keepStatus && visitsOf(pid).length && p.status !== 'visited') patch.status = 'visited';
+  if(Object.keys(patch).length){ await q(sb.from('places').update(patch).eq('id', pid)); Object.assign(p, patch); }
+}
+
+/* ===================== 방문 기록 폼 ===================== */
+function scoreWidget(cat, pid, sc){
+  return SCORE_ITEMS[cat].map(k => { const val = sc?.scores?.[k];
+    return `<div class="score" data-who="${pid}" data-key="${esc(k)}" data-val="${val ?? ''}"><span>${esc(k)}</span>${[1,2,3,4,5].map(n => `<button type="button" class="${val===n?'on':''}" onclick="setScore(this,${n})">${n}</button>`).join('')}</div>`;
+  }).join('');
+}
+function setScore(btn, n){
+  const row = btn.parentElement; const cur = Number(row.dataset.val);
+  row.dataset.val = cur === n ? '' : n;
+  $$('button', row).forEach((b,i) => b.classList.toggle('on', Number(row.dataset.val) === i+1));
+}
+function itemRow(it={}){
+  return `<div class="irow"><input class="i_name" placeholder="이름" value="${esc(it.name||'')}"><input class="i_price" inputmode="numeric" placeholder="가격" value="${it.price ?? ''}"><input class="i_qty" inputmode="numeric" value="${it.qty ?? 1}" title="수량"><button type="button" class="rec ${it.is_recommend?'on':''}" onclick="this.classList.toggle('on')" title="추천">👍</button><button type="button" class="x" onclick="this.parentElement.remove()">✕</button></div>`;
+}
+function extraRow(k='', v=''){
+  return `<div class="erow"><input class="e_k" placeholder="항목" value="${esc(k)}"><input class="e_v" inputmode="numeric" placeholder="금액" value="${v ?? ''}"><button type="button" class="x" onclick="this.parentElement.remove()">✕</button></div>`;
+}
+function addItemRow(){ $('#itemRows').insertAdjacentHTML('beforeend', itemRow()); $('#itemRows .irow:last-child .i_name').focus(); }
+function addExtraRow(k){ $('#extraRows').insertAdjacentHTML('beforeend', extraRow(k)); $('#extraRows .erow:last-child .e_v').focus(); }
+function photoArea(){
+  const f = S.form;
+  const existing = f.visitId ? photosOfVisit(f.visitId).filter(x => !f.removePhotoIds.includes(x.id)) : [];
+  return existing.map(ph => `<div class="ph"><img data-path="${esc(ph.storage_path)}" alt=""><button type="button" class="phx" onclick="removeExistingPhoto('${ph.id}')">✕</button><button type="button" class="phc ${f.coverId===ph.id?'on':''}" onclick="setCover('${ph.id}')">대표</button>${ph.is_receipt?'<span class="rcpt">영수증</span>':''}</div>`).join('')
+    + f.newPhotos.map((n,i) => `<div class="ph"><img src="${n.url}" alt=""><button type="button" class="phx" onclick="removeNewPhoto(${i})">✕</button><button type="button" class="phc ${f.coverId==='new'+i?'on':''}" onclick="setCover('new${i}')">대표</button><button type="button" class="phr ${n.receipt?'on':''}" onclick="toggleReceipt(${i})">영수증</button></div>`).join('')
+    + `<label class="ph add">＋<input type="file" accept="image/*" multiple hidden onchange="addPhotos(this)"></label>`;
+}
+function refreshPhotos(){ $('#photoGrid').innerHTML = photoArea(); hydratePhotos($('#photoGrid')); }
+function addPhotos(input){ [...input.files].forEach(file => S.form.newPhotos.push({ file, url:URL.createObjectURL(file), receipt:false })); refreshPhotos(); }
+function removeNewPhoto(i){
+  const f = S.form; f.newPhotos.splice(i, 1);
+  if(f.coverId === 'new'+i) f.coverId = null;
+  else if(f.coverId && f.coverId.startsWith('new') && Number(f.coverId.slice(3)) > i) f.coverId = 'new' + (Number(f.coverId.slice(3)) - 1);
+  refreshPhotos();
+}
+function removeExistingPhoto(id){ S.form.removePhotoIds.push(id); if(S.form.coverId === id) S.form.coverId = null; refreshPhotos(); }
+function setCover(id){ S.form.coverId = S.form.coverId === id ? null : id; refreshPhotos(); }
+function toggleReceipt(i){ S.form.newPhotos[i].receipt = !S.form.newPhotos[i].receipt; refreshPhotos(); }
+function updatePer(){
+  const cat = S.form.cat; const total = num($('#f_total')?.value);
+  const div = cat === 'stay' ? (num($('#f_nights')?.value) || 1) : (num($('#f_people')?.value) || 1);
+  const el = $('#f_per'); if(!el) return;
+  if(total == null){ el.textContent = ''; return; }
+  const unit = total / div;
+  el.innerHTML = `${cat==='stay'?'1박':'1인'} <b>${won(unit)}</b> · <span class="tier">${tierText(tierOf(cat, unit))}</span>`;
+}
+function payQuick(mode){
+  const total = num($('#f_total').value); if(total == null){ toast('총 금액을 먼저 입력해 주세요'); return; }
+  if(mode === 'half'){ const h = Math.round(total/2); $('#f_pay1').value = h; $('#f_pay2').value = total - h; }
+  else if(mode === 1){ $('#f_pay1').value = total; $('#f_pay2').value = 0; }
+  else { $('#f_pay1').value = 0; $('#f_pay2').value = total; }
+}
+function pickChip(btn){ const was = btn.classList.contains('on'); $$('.chip', btn.parentElement).forEach(b => b.classList.remove('on')); if(!was) btn.classList.add('on'); }
+function renderVisitForm({ placeId, visitId, tripId }){
+  let v = null, p = null;
+  if(visitId){ v = S.visits.find(x => x.id === visitId); if(!v) return notFound(); p = placeById(v.place_id); }
+  else p = placeById(placeId);
+  if(!p) return notFound();
+  const cat = p.category;
+  const sc = { 1:null, 2:null }; if(v) scoresOf(v.id).forEach(s => sc[s.profile_id] = s);
+  const pay = { 1:null, 2:null }; if(v) paysOf(v.id).forEach(x => pay[x.profile_id] = x.amount);
+  const items = v ? itemsOf(v.id) : [];
+  const extras = v ? Object.entries(v.extra_costs || {}) : [];
+  const prevCover = v ? (photosOfVisit(v.id).find(x => x.is_cover)?.id || null) : null;
+  // 같은 폼을 다시 그리는 경우 사진 선택 상태 유지
+  if(!S.form || S.form.key !== (visitId || 'new:'+placeId)){
+    S.form = { key:visitId || 'new:'+placeId, cat, placeId:p.id, visitId:v?.id || null, tripId:tripId || v?.trip_id || null, newPhotos:[], removePhotoIds:[], coverId:prevCover };
+  }
+  const me = S.profile, other = otherOf(me);
+  const otherOpen = !!sc[other];
+  const body = `
+  <div class="pitem" onclick="go('#/place/${p.id}')"><div class="thumb">${catIcon(cat)}</div><div class="pbody"><div class="pname">${esc(p.name)}</div><div class="meta">${esc(p.sub_category||'')} · ${esc(p.region||'')}</div></div></div>
+
+  <div class="sec-title">⚡ 빠른 기록</div>
+  <div class="card">
+    <div class="row">
+      <div class="field"><label>날짜</label><input type="date" id="f_date" value="${v?.visited_at || todayStr()}"></div>
+      <div class="field"><label>동행</label><select id="f_comp">${COMPANIONS.map(c => `<option ${(v?.companions||'둘이')===c?'selected':''}>${c}</option>`).join('')}</select></div>
+    </div>
+    <div class="row">
+      <div class="field" style="flex:2"><label>총 결제 금액</label><input inputmode="numeric" id="f_total" value="${v?.total_amount ?? ''}" placeholder="0" oninput="updatePer()"></div>
+      ${cat==='stay' ? `<div class="field"><label>박수</label><input inputmode="numeric" id="f_nights" value="${v?.nights ?? 1}" oninput="updatePer()"></div>` : ''}
+      <div class="field"><label>인원</label><input inputmode="numeric" id="f_people" value="${v?.people ?? 2}" oninput="updatePer()"></div>
+    </div>
+    <div class="meta" id="f_per" style="margin:-4px 0 10px"></div>
+    ${cat==='stay' ? `<div class="field"><label>예약 경로</label><select id="f_book"><option value="">선택 안 함</option>${BOOKING.map(b => `<option ${v?.booking_channel===b?'selected':''}>${b}</option>`).join('')}</select></div>` : ''}
+    <div class="field"><label>각자 낸 금액</label>
+      <div class="row"><input inputmode="numeric" id="f_pay1" placeholder="영웅" value="${pay[1] ?? ''}"><input inputmode="numeric" id="f_pay2" placeholder="보실" value="${pay[2] ?? ''}"></div>
+      <div class="chips" style="margin-top:6px"><button type="button" class="chip" onclick="payQuick('half')">반반</button><button type="button" class="chip" onclick="payQuick(1)">영웅이 다</button><button type="button" class="chip" onclick="payQuick(2)">보실이 다</button></div>
+    </div>
+    <div class="field" style="margin-bottom:0"><label>사진 (대표 사진, 영수증 표시 가능)</label><div class="phgrid" id="photoGrid">${photoArea()}</div></div>
+  </div>
+
+  <div class="sec-title">⭐ ${whoName(me)}의 평가</div>
+  <div class="card">${scoreWidget(cat, me, sc[me])}
+    <div class="field" style="margin:8px 0 0"><label>한줄평</label><input id="f_line${me}" value="${esc(sc[me]?.one_line || '')}" placeholder="한 문장으로 남기기"></div></div>
+
+  <div class="sec-title">⭐ ${whoName(other)}의 평가 <button type="button" class="link" onclick="$('#otherBox').classList.toggle('hidden')">${otherOpen ? '접기/펼치기' : '같이 입력하기'}</button></div>
+  <div class="card ${otherOpen ? '' : 'hidden'}" id="otherBox">${scoreWidget(cat, other, sc[other])}
+    <div class="field" style="margin:8px 0 0"><label>한줄평</label><input id="f_line${other}" value="${esc(sc[other]?.one_line || '')}"></div></div>
+
+  <div class="sec-title">🏅 보슐랭 등급 (둘이 합의, 나중에 정해도 돼요)</div>
+  <div class="card"><div class="chips wrap" id="f_grade" style="margin:0">${GRADE_ORDER.map(g => `<button type="button" class="chip ${p.grade===g?'on':''}" data-g="${g}" onclick="pickChip(this)">${GRADES[g].short} ${GRADES[g].label}</button>`).join('')}</div></div>
+
+  <div class="sec-title">📝 상세 기록 (나중에 채워도 돼요)</div>
+  <div class="card">
+    <div class="field"><label>${ITEM_LABEL[cat]} (이름 · 가격 · 수량 · 추천)</label><div id="itemRows">${items.map(itemRow).join('')}</div>
+      <button type="button" class="btn sm" onclick="addItemRow()">＋ 항목 추가</button></div>
+    <div class="field"><label>추가 비용</label><div id="extraRows">${extras.map(([k,val]) => extraRow(k, val)).join('')}</div>
+      <div class="chips">${EXTRA_PRESETS[cat].map(k => `<button type="button" class="chip" onclick="addExtraRow('${k}')">＋ ${k}</button>`).join('')}<button type="button" class="chip" onclick="addExtraRow('')">＋ 기타</button></div></div>
+    ${cat!=='stay' ? `<div class="field"><label>${cat==='food'?'웨이팅':'대기'} 시간 (분)</label><input inputmode="numeric" id="f_wait" value="${v?.wait_minutes ?? ''}"></div>` : ''}
+    <label class="check"><input type="checkbox" id="f_done" ${v?.is_detail_done ? 'checked' : ''}> 상세 기록 완료</label>
+  </div>
+
+  <div class="savebar"><button class="btn primary full" id="saveBtn" onclick="saveVisit()">저장</button></div>
+  ${v ? `<button class="btn danger full" onclick="deleteVisit('${v.id}')">이 방문 기록 삭제</button>` : ''}`;
+  return { title: v ? '방문 기록 수정' : '방문 기록', body, opts:{back:true}, after:updatePer };
+}
+function readScores(pid){
+  const out = {};
+  $$(`.score[data-who="${pid}"]`).forEach(r => { const val = Number(r.dataset.val); if(val) out[r.dataset.key] = val; });
+  return out;
+}
+async function saveVisit(){
+  const f = S.form, p = placeById(f.placeId), cat = p.category;
+  const btn = $('#saveBtn'); btn.disabled = true; btn.textContent = '저장 중…';
+  try {
+    const date = $('#f_date').value; if(!date) throw new Error('날짜를 입력해 주세요');
+    const extra = {};
+    $$('#extraRows .erow').forEach(r => { const k = $('.e_k', r).value.trim(); const val = num($('.e_v', r).value); if(k && val != null) extra[k] = val; });
+    const row = {
+      place_id:p.id, visited_at:date, companions:$('#f_comp').value,
+      total_amount:num($('#f_total').value), people:num($('#f_people').value) || 1,
+      nights:cat==='stay' ? (num($('#f_nights').value) || 1) : null,
+      booking_channel:cat==='stay' ? ($('#f_book').value || null) : null,
+      extra_costs:extra, wait_minutes:cat!=='stay' ? num($('#f_wait').value) : null,
+      is_detail_done:$('#f_done').checked, trip_id:f.tripId || null,
+    };
+    let vid = f.visitId;
+    if(vid) await q(sb.from('visits').update(row).eq('id', vid));
+    else { row.created_by = S.profile; const ins = await q(sb.from('visits').insert(row).select().single()); vid = ins.id; f.visitId = vid; f.key = vid; }
+
+    // 점수
+    for(const pid of [1,2]){
+      const scores = readScores(pid); const line = ($(`#f_line${pid}`)?.value || '').trim();
+      if(Object.keys(scores).length || line) await q(sb.from('visit_scores').upsert({ visit_id:vid, profile_id:pid, scores, one_line:line || null }));
+      else await q(sb.from('visit_scores').delete().eq('visit_id', vid).eq('profile_id', pid));
+    }
+    // 각자 낸 금액
+    for(const pid of [1,2]){
+      const amt = num($(`#f_pay${pid}`).value);
+      if(amt != null) await q(sb.from('visit_payments').upsert({ visit_id:vid, profile_id:pid, amount:amt }));
+      else await q(sb.from('visit_payments').delete().eq('visit_id', vid).eq('profile_id', pid));
+    }
+    // 항목
+    await q(sb.from('visit_items').delete().eq('visit_id', vid));
+    const items = $$('#itemRows .irow').map((r, i) => ({ visit_id:vid, name:$('.i_name', r).value.trim(), price:num($('.i_price', r).value),
+      qty:num($('.i_qty', r).value) || 1, is_recommend:$('.rec', r).classList.contains('on'), sort_order:i })).filter(x => x.name);
+    if(items.length) await q(sb.from('visit_items').insert(items));
+    // 사진 삭제
+    for(const id of f.removePhotoIds){
+      const ph = S.photos.find(x => x.id === id);
+      if(ph){ await sb.storage.from('photos').remove([ph.storage_path]); await q(sb.from('photos').delete().eq('id', id)); }
+    }
+    // 사진 업로드
+    const newIds = [];
+    for(let i = 0; i < f.newPhotos.length; i++){
+      btn.textContent = `사진 올리는 중 ${i+1}/${f.newPhotos.length}`;
+      const n = f.newPhotos[i]; const blob = await resizeImage(n.file);
+      const path = `${vid}/${uuid()}.jpg`;
+      const up = await sb.storage.from('photos').upload(path, blob, { contentType:'image/jpeg', upsert:false });
+      if(up.error) throw new Error('사진 업로드 실패: ' + up.error.message);
+      const ins = await q(sb.from('photos').insert({ visit_id:vid, storage_path:path, is_receipt:n.receipt, created_by:S.profile }).select().single());
+      newIds[i] = ins.id;
+    }
+    const coverId = f.coverId && f.coverId.startsWith('new') ? newIds[Number(f.coverId.slice(3))] : f.coverId;
+    await q(sb.from('photos').update({ is_cover:false }).eq('visit_id', vid));
+    if(coverId) await q(sb.from('photos').update({ is_cover:true }).eq('id', coverId));
+    // 등급
+    const gBtn = $('#f_grade .chip.on'); const g = gBtn ? gBtn.dataset.g : null;
+    if(g !== (p.grade || null)) await q(sb.from('places').update({ grade:g }).eq('id', p.id));
+
+    f.newPhotos.forEach(n => URL.revokeObjectURL(n.url));
+    S.form = null;
+    await loadAll(); await recomputePlace(p.id);
+    toast('저장했어요');
+    S.ui.placeTab[p.id] = 'visits';
+    go('#/place/' + p.id);
+  } catch(e){ btn.disabled = false; btn.textContent = '저장'; toast(e.message); }
+}
+async function deleteVisit(vid){
+  if(!confirm('이 방문 기록을 삭제할까요? 사진도 함께 지워져요')) return;
+  const v = S.visits.find(x => x.id === vid);
+  try {
+    const paths = photosOfVisit(vid).map(p => p.storage_path);
+    if(paths.length) await sb.storage.from('photos').remove(paths);
+    await q(sb.from('visits').delete().eq('id', vid));
+    S.form = null; await loadAll(); await recomputePlace(v.place_id, true);
+    toast('삭제했어요'); go('#/place/' + v.place_id);
+  } catch(e){ toast('삭제 실패: ' + e.message); }
+}
+
+/* ===================== 지도 ===================== */
+function mapPlaces(){
+  const m = S.ui.map;
+  return S.places.filter(p => p.lat && p.lng)
+    .filter(p => m.cat === 'all' || p.category === m.cat)
+    .filter(p => m.status === 'all' || (m.status === 'visited' ? p.status === 'visited' : p.status !== 'visited'));
+}
+function pinHtml(p){
+  if(p.status !== 'visited') return `<div class="pin wish" onclick="mapPick('${p.id}')">${p.status==='planned'?'📅':'💭'}</div>`;
+  const G = GRADES[p.grade];
+  return `<div class="pin" style="background:${G ? G.color : '#1E3A5F'}" onclick="mapPick('${p.id}')">${G ? G.short : catIcon(p.category)}</div>`;
+}
+function renderMap(){
+  const m = S.ui.map;
+  const body = `
+  <div class="map-ctl">
+    <div class="chips">${[['all','전체'],['food','🍽️ 음식'],['play','🎡 놀거리'],['stay','🏨 숙박']].map(([k,l]) => `<button class="chip ${m.cat===k?'on':''}" onclick="S.ui.map.cat='${k}';renderRoute()">${l}</button>`).join('')}</div>
+    <div class="chips">${[['all','모두'],['visited','✅ 가본 곳'],['wish','💭 위시']].map(([k,l]) => `<button class="chip ${m.status===k?'on':''}" onclick="S.ui.map.status='${k}';renderRoute()">${l}</button>`).join('')}</div>
+  </div>
+  <div id="map"></div>
+  <div id="mapcard" class="mapcard hidden"></div>
+  <button class="locbtn" onclick="mapMyPos()" aria-label="내 위치">📍</button>`;
+  return { title:'지도', body, opts:{ mapView:true }, after:drawMainMap };
+}
+async function drawMainMap(){
+  const el = $('#map'); if(!el) return;
+  try {
+    const k = await loadKakao(); if(!document.body.contains(el)) return;
+    const list = mapPlaces();
+    const start = S.lastPos || (list[0] ? { lat:list[0].lat, lng:list[0].lng } : { lat:37.38, lng:126.80 });
+    const map = new k.maps.Map(el, { center:new k.maps.LatLng(start.lat, start.lng), level:8 });
+    S.mapObj = map;
+    const bounds = new k.maps.LatLngBounds();
+    list.forEach(p => { const pos = new k.maps.LatLng(p.lat, p.lng); bounds.extend(pos);
+      new k.maps.CustomOverlay({ position:pos, content:pinHtml(p), yAnchor:1, clickable:true }).setMap(map); });
+    if(list.length > 1) map.setBounds(bounds); else if(list.length === 1) map.setCenter(new k.maps.LatLng(list[0].lat, list[0].lng));
+    k.maps.event.addListener(map, 'click', () => $('#mapcard')?.classList.add('hidden'));
+  } catch(e){ el.innerHTML = `<div class="empty">${esc(e.message)}</div>`; }
+}
+function mapPick(id){
+  const p = placeById(id); const c = $('#mapcard'); if(!p || !c) return;
+  const vs = visitsOf(id); const ph = coverOfPlace(id);
+  c.innerHTML = `<div style="display:flex;gap:12px;align-items:center">${thumbHtml(ph, catIcon(p.category))}
+    <div class="pbody"><div class="pname">${esc(p.name)}</div><div style="margin:3px 0">${gradeBadge(p.grade)} <span class="tier">${tierText(p.price_tier)}</span> ${p.status!=='visited'?statusBadge(p.status):''}</div>
+    <div class="meta">${esc(p.sub_category||'')} · ${vs.length}회 방문</div></div></div>
+    <div class="row" style="margin-top:10px"><button class="btn sm primary" onclick="go('#/place/${p.id}')">상세 보기</button><a class="btn sm" href="${naverMapUrl(p)}" target="_blank" rel="noopener">네이버지도</a><a class="btn sm" href="${kakaoMapUrl(p)}" target="_blank" rel="noopener">길찾기</a></div>`;
+  c.classList.remove('hidden'); hydratePhotos(c);
+}
+async function mapMyPos(){
+  try { const pos = await getPos(); const k = await loadKakao(); if(S.mapObj){ S.mapObj.setCenter(new k.maps.LatLng(pos.lat, pos.lng)); S.mapObj.setLevel(6); } }
+  catch(e){ toast(e.message); }
+}
+async function drawRouteMap(elId, pts){
+  const el = document.getElementById(elId); if(!el) return;
+  try {
+    const k = await loadKakao(); if(!document.body.contains(el)) return;
+    const valid = pts.filter(p => p.lat && p.lng);
+    const c = valid[0] || { lat:37.5, lng:127.0 };
+    const map = new k.maps.Map(el, { center:new k.maps.LatLng(c.lat, c.lng), level:7 });
+    const bounds = new k.maps.LatLngBounds(); const path = [];
+    valid.forEach((p, i) => { const pos = new k.maps.LatLng(p.lat, p.lng); path.push(pos); bounds.extend(pos);
+      new k.maps.CustomOverlay({ position:pos, content:`<div class="pin" style="background:${p.day===2?'#1E3A5F':'#B3261E'}">${i+1}</div>`, yAnchor:1 }).setMap(map); });
+    if(path.length > 1){ new k.maps.Polyline({ path, strokeWeight:3, strokeColor:'#B3261E', strokeOpacity:.7, strokeStyle:'shortdash' }).setMap(map); map.setBounds(bounds); }
+  } catch(e){ el.innerHTML = `<div class="empty">${esc(e.message)}</div>`; }
+}
+
+/* ===================== 랜덤 여행 ===================== */
+function defaultTripForm(){ return { where:'region', region:'', duration:'day', start:todayStr(), budget:'', mode:'car', useWish:true, useVisited:true, useNew:true }; }
+function renderTripNew(){
+  const f = S.tripForm || (S.tripForm = defaultTripForm());
+  const d = S.draftTrip;
+  const seg = (key, opts) => `<div class="seg">${opts.map(([k,l]) => `<button type="button" class="${f[key]===k?'on':''}" onclick="readTripForm();S.tripForm.${key}='${k}';renderRoute()">${l}</button>`).join('')}</div>`;
+  let result = '';
+  if(d){
+    const total = sum(d.slots.filter(s=>s.cand).map(s=>s.cand.est));
+    const budget = num(f.budget);
+    let prev = null;
+    result = `
+    <div class="sec-title">🎲 ${esc(d.regionName)} · ${DURATION_LABEL[d.params.duration]}</div>
+    <div class="tripmap" id="draftMap"></div>
+    ${d.slots.map((s, i) => {
+      const dist = (prev && s.cand) ? ' · 이전 장소에서 ' + kmText(haversine(prev, s.cand)) : '';
+      if(s.cand) prev = s.cand;
+      const dayHead = (i === 0 || d.slots[i-1].day !== s.day) && d.params.duration === 'overnight' ? `<div class="daylabel">${s.day}일차</div>` : '';
+      return `${dayHead}<div class="slot ${s.locked?'locked':''}">
+        <div class="slot-h"><span class="slot-tag">${esc(s.slot)}</span><span class="meta">${s.cand ? esc(s.cand.tag) : ''}</span></div>
+        ${s.cand ? `<div class="slot-name">${esc(s.cand.name)}</div><div class="meta">${esc(s.cand.sub || '')} · 예상 1인 ${won(s.cand.est)}${dist}</div>`
+          : `<div class="meta">후보가 없어요. 이동수단이나 후보 범위를 넓혀 보세요</div>`}
+        <div class="slot-b"><button type="button" class="btn sm ${s.locked?'navy':''}" onclick="toggleLock(${i})">${s.locked?'🔒 고정됨':'🔓 고정'}</button>
+        <button type="button" class="btn sm" onclick="rerollSlot(${i})" ${s.locked?'disabled':''}>🔄 다시 뽑기</button>
+        <button type="button" class="btn sm ghost" onclick="removeSlot(${i})">빼기</button></div></div>`;
+    }).join('')}
+    <div class="card"><div class="kv"><span>예상 1인 비용</span><span><b>${won(total)}</b>${budget ? ` / 예산 ${won(budget)} ${total > budget ? '⚠️' : '✅'}` : ''}</span></div>
+      <div class="meta">예상 비용은 내 기록 평균 → 예상 금액 → 가격대 → 기본값 순서로 계산해요</div></div>
+    <div class="field"><label>여행 이름</label><input id="t_title" value="${esc(d.title || `🎲 ${d.regionName} ${DURATION_LABEL[d.params.duration]}`)}" oninput="S.draftTrip.title=this.value"></div>
+    <div class="row"><button class="btn" onclick="rerollAll()">🔄 고정 안 한 것 다시</button><button class="btn primary" id="tsave" onclick="saveTrip()">💾 여행 저장</button></div>`;
+  }
+  const body = `
+  <div class="card">
+    <div class="field"><label>어디로?</label>
+      ${seg('where', [['region','지역 입력'],['here','내 주변'],['near','🎲 근교'],['far','🎲 전국']])}
+      ${f.where === 'region' ? `<input id="t_region" placeholder="예: 강릉, 시흥시, 서울 성수동" value="${esc(f.region)}">` : `<div class="meta">${f.where==='here' ? '현재 위치를 기준으로 뽑아요' : f.where==='near' ? '수도권·근교 지역 중 하나를 무작위로 골라요' : '전국 여행지 중 하나를 무작위로 골라요'}</div>`}
+    </div>
+    <div class="field"><label>기간</label>${seg('duration', [['half','반나절'],['day','당일'],['overnight','1박 2일']])}</div>
+    <div class="field"><label>이동</label>${seg('mode', [['car','🚗 자차'],['transit','🚇 대중교통'],['walk','🚶 도보']])}</div>
+    <div class="row">
+      <div class="field"><label>출발 날짜</label><input type="date" id="t_start" value="${esc(f.start)}"></div>
+      <div class="field"><label>1인 예산 (선택)</label><input id="t_budget" inputmode="numeric" placeholder="예: 80000" value="${esc(f.budget)}"></div>
+    </div>
+    <div class="field" style="margin-bottom:4px"><label>후보 범위</label>
+      <label class="check"><input type="checkbox" id="t_wish" ${f.useWish?'checked':''}> 💭 위시·계획된 곳 (가중치 높음)</label>
+      <label class="check"><input type="checkbox" id="t_visited" ${f.useVisited?'checked':''}> ⭐ 가본 곳 중 1스타·보구르망 이상 재방문</label>
+      <label class="check"><input type="checkbox" id="t_new" ${f.useNew?'checked':''}> ✨ 처음 가보는 곳 (카카오 검색)</label>
+    </div>
+    <button class="btn primary full" id="tgen" onclick="generateTrip()">🎲 ${d ? '처음부터 다시 뽑기' : '코스 뽑기'}</button>
+  </div>
+  ${result}`;
+  return { title:'랜덤 여행', body, opts:{back:true}, after: () => { if(d) drawRouteMap('draftMap', d.slots.filter(s=>s.cand).map(s => ({ lat:s.cand.lat, lng:s.cand.lng, day:s.day }))); } };
+}
+function readTripForm(){
+  const f = S.tripForm || defaultTripForm();
+  if($('#t_region')) f.region = $('#t_region').value;
+  if($('#t_start')) f.start = $('#t_start').value;
+  if($('#t_budget')) f.budget = $('#t_budget').value;
+  if($('#t_wish')){ f.useWish = $('#t_wish').checked; f.useVisited = $('#t_visited').checked; f.useNew = $('#t_new').checked; }
+  S.tripForm = f; return f;
+}
+function isCafe(p){ return /카페|디저트|베이커리|제과|빵/.test(p.sub_category || ''); }
+function typeMatch(p, type){
+  if(type === 'meal') return p.category === 'food' && !isCafe(p);
+  if(type === 'cafe') return p.category === 'food' && isCafe(p);
+  if(type === 'play') return p.category === 'play';
+  if(type === 'stay') return p.category === 'stay';
+  if(type === 'cafeplay') return (p.category === 'food' && isCafe(p)) || p.category === 'play';
+  return false;
+}
+function estOf(p, type){
+  const half = type === 'stay' ? 2 : 1; // 숙박은 1박 요금을 둘이 나눈다고 가정
+  const a = placeAvgUnit(p); if(a != null) return a / half;
+  if(p.expected_price) return p.expected_price / half;
+  if(p.price_tier) return TIER_MID[p.category][p.price_tier-1] / half;
+  return DEFAULT_EST[type];
+}
+async function buildPool(type, center, f){
+  const km = MODE_KM[f.mode]; const out = []; const seen = new Set(S.places.map(p => p.kakao_place_id).filter(Boolean));
+  for(const p of S.places){
+    if(!p.lat || !typeMatch(p, type) || p.grade === 'no') continue;
+    const isWish = p.status !== 'visited';
+    if(isWish && !f.useWish) continue;
+    if(!isWish && (!f.useVisited || !['3star','2star','1star','bogourmand'].includes(p.grade))) continue;
+    if(haversine(center, p) > km.center) continue;
+    const w = isWish ? (p.status === 'wish' ? 5 : 3) : (p.grade === '3star' || p.grade === '2star' ? 3 : 2);
+    out.push({ key:'p:'+p.id, place:p, name:p.name, lat:p.lat, lng:p.lng, w, tag:isWish ? '💭 위시' : '⭐ 재방문', sub:p.sub_category, est:estOf(p, type) });
+  }
+  if(f.useNew){
+    for(const code of KAKAO_CODES[type]){
+      for(const page of [1,2,3]){
+        const res = await kakaoCategory(code, center, km.center*1000, page);
+        for(const d of res){
+          if(seen.has(String(d.id))) continue; seen.add(String(d.id));
+          if(type === 'meal' && /간식|술집|호프|패스트푸드/.test(d.category_name)) continue;
+          if(type === 'play' && /공원|도서관|주차|교회|사찰/.test(d.category_name) && Math.random() < .6) continue;
+          out.push({ key:'k:'+d.id, kakao:d, name:d.place_name, lat:+d.y, lng:+d.x, w:1, tag:'✨ 처음', sub:kakaoSubOf(d), est:DEFAULT_EST[type] });
+        }
+        if(res.length < 15) break;
+      }
+    }
+  }
+  return out;
+}
+function weightedPick(arr){
+  const total = sum(arr.map(c => c.w)); if(!total) return null;
+  let r = Math.random() * total;
+  for(const c of arr){ r -= c.w; if(r <= 0) return c; }
+  return arr[arr.length-1];
+}
+function pickSlot(i){
+  const d = S.draftTrip, slot = d.slots[i];
+  const used = new Set(d.slots.filter((s, j) => j !== i && s.cand).map(s => s.cand.key));
+  let pool = (d.pool[slot.type] || []).filter(c => !used.has(c.key) && c.key !== slot.cand?.key);
+  if(!pool.length) pool = (d.pool[slot.type] || []).filter(c => !used.has(c.key));
+  let prev = null; for(let j = i-1; j >= 0; j--){ if(d.slots[j].cand){ prev = d.slots[j].cand; break; } }
+  const step = MODE_KM[d.params.mode].step;
+  let near = prev ? pool.filter(c => haversine(prev, c) <= step) : pool;
+  if(!near.length) near = pool;
+  const budget = num(d.params.budget);
+  const others = sum(d.slots.filter((s, j) => j !== i && s.cand).map(s => s.cand.est));
+  let fit = budget ? near.filter(c => others + c.est <= budget) : near;
+  if(!fit.length) fit = near;
+  slot.cand = weightedPick(fit);
+}
+async function generateTrip(){
+  const f = readTripForm(); const btn = $('#tgen'); btn.disabled = true; btn.textContent = '코스 짜는 중…';
+  try {
+    let center = null, regionName = '';
+    if(f.where === 'here'){ center = await getPos(); regionName = '내 주변'; }
+    else if(f.where === 'near' || f.where === 'far'){
+      const list = f.where === 'near' ? NEAR_REGIONS : FAR_REGIONS;
+      regionName = list[Math.floor(Math.random() * list.length)]; center = await geocode(regionName);
+    } else {
+      regionName = f.region.trim(); if(!regionName) throw new Error('지역을 입력해 주세요');
+      center = await geocode(regionName);
+    }
+    if(!center) throw new Error('지역 위치를 찾지 못했어요');
+    if(!f.useWish && !f.useVisited && !f.useNew) throw new Error('후보 범위를 하나 이상 골라 주세요');
+    const tpl = SLOT_TEMPLATES[f.duration];
+    const pool = {};
+    for(const t of [...new Set(tpl.map(s => s.type))]) pool[t] = await buildPool(t, center, f);
+    S.draftTrip = { params:{ ...f }, center, regionName, pool, title:'', slots:tpl.map(s => ({ ...s, cand:null, locked:false })) };
+    S.draftTrip.slots.forEach((s, i) => pickSlot(i));
+    renderRoute();
+  } catch(e){ btn.disabled = false; btn.textContent = '🎲 코스 뽑기'; toast(e.message); }
+}
+function toggleLock(i){ const s = S.draftTrip.slots[i]; if(!s.cand) return; s.locked = !s.locked; renderRoute(); }
+function rerollSlot(i){ pickSlot(i); renderRoute(); }
+function rerollAll(){ S.draftTrip.slots.forEach((s, i) => { if(!s.locked) s.cand = null; }); S.draftTrip.slots.forEach((s, i) => { if(!s.locked) pickSlot(i); }); renderRoute(); }
+function removeSlot(i){ S.draftTrip.slots.splice(i, 1); renderRoute(); }
+async function saveTrip(){
+  const d = S.draftTrip, f = d.params;
+  const chosen = d.slots.filter(s => s.cand); if(!chosen.length){ toast('저장할 장소가 없어요'); return; }
+  const btn = $('#tsave'); btn.disabled = true; btn.textContent = '저장 중…';
+  try {
+    const start = readTripForm().start || null;
+    const end = start && f.duration === 'overnight' ? addDays(start, 1) : start;
+    const title = ($('#t_title')?.value || '').trim() || `🎲 ${d.regionName} ${DURATION_LABEL[f.duration]}`;
+    const trip = await q(sb.from('trips').insert({ title, region:d.regionName, start_date:start, end_date:end, mode:f.mode, budget:num(f.budget), is_random:true, created_by:S.profile }).select().single());
+    const stops = []; let order = 0;
+    for(const s of chosen){
+      let pid;
+      if(s.cand.place){ pid = s.cand.place.id; if(s.cand.place.status === 'wish') await q(sb.from('places').update({ status:'planned' }).eq('id', pid)); }
+      else { const ins = await q(sb.from('places').insert({ ...kakaoToPlace(s.cand.kakao), status:'planned', source:'랜덤 여행', created_by:S.profile }).select().single()); pid = ins.id; }
+      stops.push({ trip_id:trip.id, place_id:pid, day:s.day, stop_order:order++, slot:s.slot, is_locked:s.locked });
+    }
+    await q(sb.from('trip_stops').insert(stops));
+    S.draftTrip = null; S.tripForm = null;
+    await loadAll(); toast('여행을 저장했어요'); go('#/trip/' + trip.id);
+  } catch(e){ btn.disabled = false; btn.textContent = '💾 여행 저장'; toast('저장 실패: ' + e.message); }
+}
+function renderTrip(id){
+  const t = S.trips.find(x => x.id === id); if(!t) return notFound();
+  const stops = S.stops.filter(s => s.trip_id === id).sort((a,b) => a.day - b.day || a.stop_order - b.stop_order);
+  const tv = S.visits.filter(v => v.trip_id === id);
+  const spent = sum(tv.map(v => v.total_amount)) + sum(tv.flatMap(v => Object.values(v.extra_costs || {})));
+  let lastDay = 0;
+  const list = stops.map((s, i) => {
+    const p = placeById(s.place_id);
+    const head = s.day !== lastDay && stops.some(x => x.day === 2) ? `<div class="daylabel">${s.day}일차</div>` : ''; lastDay = s.day;
+    if(!p) return head + `<div class="slot"><span class="slot-tag">${esc(s.slot||'')}</span><div class="meta">삭제된 장소</div></div>`;
+    const done = tv.find(v => v.place_id === p.id);
+    return `${head}<div class="slot"><div class="slot-h"><span class="slot-tag">${i+1}. ${esc(s.slot||'')}</span>${done ? '<span class="status">✅ 기록됨</span>' : statusBadge(p.status)}</div>
+      <div class="slot-name" onclick="go('#/place/${p.id}')" style="cursor:pointer">${esc(p.name)}</div><div class="meta">${esc(p.sub_category||'')} · ${esc(p.region||'')}</div>
+      <div class="slot-b">${done ? `<button class="btn sm" onclick="go('#/visit/edit/${done.id}')">기록 보기</button>` : `<button class="btn sm primary" onclick="go('#/visit/new/${p.id}?trip=${t.id}')">기록하기</button>`}
+      <a class="btn sm" href="${kakaoMapUrl(p)}" target="_blank" rel="noopener">길찾기</a></div></div>`;
+  }).join('');
+  const body = `
+  <div class="card">
+    <div class="pname" style="font-size:18px">${esc(t.title)}</div>
+    <div class="meta">${t.start_date ? fmtDate(t.start_date) + (t.end_date && t.end_date !== t.start_date ? ' ~ ' + fmtDate(t.end_date) : '') : '날짜 미정'} · ${MODE_LABEL[t.mode] || ''} · ${stops.length}곳</div>
+    ${t.budget ? `<div class="meta">1인 예산 ${won(t.budget)}</div>` : ''}
+    ${tv.length ? `<div class="kv" style="margin-top:6px"><span>실제 지출 (추가 비용 포함)</span><span><b>${won(spent)}</b></span></div>` : ''}
+  </div>
+  <div class="tripmap" id="tripMap"></div>
+  ${list}
+  <div class="row" style="margin-top:10px">
+    <button class="btn" onclick="finishTrip('${t.id}')">🧹 여행 정리</button>
+    <button class="btn danger" onclick="deleteTrip('${t.id}')">삭제</button>
+  </div>
+  <div class="meta" style="margin-top:6px">여행 정리: 못 간 곳은 다시 '가고 싶음'으로 돌려놓아요</div>`;
+  const pts = stops.map(s => { const p = placeById(s.place_id); return p ? { lat:p.lat, lng:p.lng, day:s.day } : null; }).filter(Boolean);
+  return { title:'여행', body, opts:{back:true}, after: () => drawRouteMap('tripMap', pts) };
+}
+async function finishTrip(id){
+  const stops = S.stops.filter(s => s.trip_id === id);
+  const ids = stops.map(s => s.place_id).filter(pid => { const p = placeById(pid); return p && p.status === 'planned' && !visitsOf(pid).length; });
+  try { if(ids.length) await q(sb.from('places').update({ status:'wish' }).in('id', ids)); await loadAll(); renderRoute(); toast(ids.length ? `${ids.length}곳을 위시로 돌려놨어요` : '정리할 곳이 없어요'); }
+  catch(e){ toast('실패: ' + e.message); }
+}
+async function deleteTrip(id){
+  if(!confirm('이 여행을 삭제할까요? (장소와 방문 기록은 남아요)')) return;
+  try {
+    const ids = S.stops.filter(s => s.trip_id === id).map(s => s.place_id).filter(pid => { const p = placeById(pid); return p && p.status === 'planned' && !visitsOf(pid).length; });
+    if(ids.length) await q(sb.from('places').update({ status:'wish' }).in('id', ids));
+    await q(sb.from('trips').delete().eq('id', id)); await loadAll(); toast('삭제했어요'); go('#/home');
+  } catch(e){ toast('삭제 실패: ' + e.message); }
+}
+
+/* ===================== 추억 ===================== */
+function renderMemory(){
+  const m = S.ui.memory;
+  const years = [...new Set([new Date().getFullYear(), ...S.visits.map(v => Number(v.visited_at.slice(0,4)))])].sort((a,b) => b-a);
+  const yearSel = `<select onchange="S.ui.memory.year=Number(this.value);renderRoute()" style="margin-bottom:12px">${years.map(y => `<option value="${y}" ${m.year===y?'selected':''}>${y}년</option>`).join('')}</select>`;
+  let content = '';
+  if(m.seg === 'timeline') content = memoryTimeline();
+  else if(m.seg === 'stats') content = yearSel + memoryStats(m.year);
+  else content = `<div class="row no-print">${yearSel}<button class="btn" onclick="window.print()" style="margin-bottom:12px">🖨️ PDF로 저장</button></div>` + memoryEdition(m.year);
+  const body = `
+  <div class="seg no-print">${[['timeline','타임라인'],['stats','통계'],['edition','에디션']].map(([k,l]) => `<button class="${m.seg===k?'on':''}" onclick="S.ui.memory.seg='${k}';renderRoute()">${l}</button>`).join('')}</div>
+  ${content}`;
+  return { title:'추억', body };
+}
+function memoryTimeline(){
+  const together = S.visits.filter(v => v.companions === '둘이').sort((a,b) => a.visited_at.localeCompare(b.visited_at));
+  const togetherPlaces = new Set(together.map(v => v.place_id));
+  const first = together[0];
+  const trips = [...S.trips].sort((a,b) => (b.start_date||'').localeCompare(a.start_date||''));
+  const sorted = [...S.visits].sort(byDateDesc);
+  const groups = {};
+  sorted.forEach(v => { const k = v.visited_at.slice(0,7); (groups[k] = groups[k] || []).push(v); });
+  return `
+  ${together.length ? `<div class="card"><div class="stat-row" style="grid-template-columns:1fr 1fr">
+    <div><div class="stat-big" style="font-size:22px;font-weight:800">${togetherPlaces.size}곳</div><div class="meta">${whoName(1)} ♥ ${whoName(2)} 함께 간 곳</div></div>
+    <div><div style="font-weight:800">${esc(placeById(first.place_id)?.name || '')}</div><div class="meta">처음 같이 간 곳 · ${fmtDate(first.visited_at)}</div></div>
+  </div></div>` : ''}
+  ${trips.length ? `<div class="sec-title">🧳 여행</div>${trips.slice(0,5).map(tripItem).join('')}` : ''}
+  ${Object.keys(groups).length ? Object.entries(groups).map(([ym, vs]) => `
+    <div class="sec-title">${ym.slice(0,4)}년 ${Number(ym.slice(5))}월 <span>${vs.length}곳 · ${won(sum(vs.map(v=>v.total_amount)))}</span></div>
+    ${vs.map(v => { const p = placeById(v.place_id); return p ? visitCard(v, p, true) : ''; }).join('')}`).join('')
+    : '<div class="empty">아직 추억이 없어요</div>'}`;
+}
+function memoryStats(year){
+  const yv = S.visits.filter(v => v.visited_at.startsWith(String(year)));
+  if(!yv.length) return '<div class="empty">이 해에는 기록이 없어요</div>';
+  const ids = new Set(yv.map(v => v.id));
+  const pay = pid => sum(S.payments.filter(p => p.profile_id === pid && ids.has(p.visit_id)).map(p => p.amount));
+  const totalSpend = sum(yv.map(v => v.total_amount));
+  const months = Array.from({length:12}, (_, i) => sum(yv.filter(v => Number(v.visited_at.slice(5,7)) === i+1).map(v => v.total_amount)));
+  const maxM = Math.max(...months, 1);
+  const byCat = Object.keys(CAT).map(c => { const vs = yv.filter(v => placeById(v.place_id)?.category === c); return { c, n:vs.length, s:sum(vs.map(v=>v.total_amount)) }; });
+  const maxCat = Math.max(...byCat.map(x=>x.s), 1);
+  const regionCount = {}; yv.forEach(v => { const r = placeById(v.place_id)?.region || '기타'; regionCount[r] = (regionCount[r]||0) + 1; });
+  const regions = Object.entries(regionCount).sort((a,b) => b[1]-a[1]).slice(0,5); const maxR = regions[0]?.[1] || 1;
+  const placeCount = {}; yv.forEach(v => { placeCount[v.place_id] = (placeCount[v.place_id]||0) + 1; });
+  const topPlaces = Object.entries(placeCount).sort((a,b) => b[1]-a[1]).slice(0,5);
+  // 출처별
+  const src = {};
+  S.places.filter(p => p.source && p.status === 'visited').forEach(p => {
+    const sc = avg(visitsOf(p.id).flatMap(v => scoresOf(v.id).map(scoreAvg)).filter(x => x!=null));
+    const o = src[p.source] = src[p.source] || { n:0, g:[], s:[] };
+    o.n++; if(p.grade) o.g.push(GRADES[p.grade].num); if(sc!=null) o.s.push(sc);
+  });
+  // 기대 vs 실제
+  const expRows = S.places.filter(p => p.expected_price && placeAvgUnit(p) != null).map(p => ({ p, e:p.expected_price, a:placeAvgUnit(p) }));
+  // 의견 분분
+  const split = yv.map(v => { const s1 = scoreAvg(scoresOf(v.id).find(s => s.profile_id === 1)), s2 = scoreAvg(scoresOf(v.id).find(s => s.profile_id === 2));
+    return (s1!=null && s2!=null) ? { v, s1, s2, d:Math.abs(s1-s2) } : null; }).filter(x => x && x.d >= 1).sort((a,b) => b.d-a.d).slice(0,5);
+  return `
+  <div class="stat-row">
+    <div class="stat"><div class="n">${yv.length}회</div><div class="l">방문 · ${new Set(yv.map(v=>v.place_id)).size}곳</div></div>
+    <div class="stat"><div class="n">${won(totalSpend)}</div><div class="l">총 지출</div></div>
+    <div class="stat"><div class="n">${won(totalSpend / yv.length)}</div><div class="l">회당 평균</div></div>
+  </div>
+  <div class="stat-row" style="grid-template-columns:1fr 1fr;margin-top:8px">
+    <div class="stat"><div class="n who1">${won(pay(1))}</div><div class="l">영웅이 낸 돈</div></div>
+    <div class="stat"><div class="n who2">${won(pay(2))}</div><div class="l">보실이 낸 돈</div></div>
+  </div>
+  <div class="sec-title">월별 지출</div>
+  <div class="card"><div class="bars">${months.map((v,i) => `<div class="b" title="${won(v)}"><i style="height:${v/maxM*100}%"></i><span>${i+1}</span></div>`).join('')}</div></div>
+  <div class="sec-title">카테고리</div>
+  <div class="card">${byCat.map(x => `<div class="hbar"><span class="hl">${CAT[x.c].icon} ${CAT[x.c].label} ${x.n}회</span><span class="ht"><i style="width:${x.s/maxCat*100}%"></i></span><span class="hv">${won(x.s)}</span></div>`).join('')}</div>
+  <div class="sec-title">많이 간 지역</div>
+  <div class="card">${regions.map(([r,n]) => `<div class="hbar"><span class="hl">${esc(r)}</span><span class="ht"><i style="width:${n/maxR*100}%"></i></span><span class="hv">${n}회</span></div>`).join('')}</div>
+  <div class="sec-title">최다 방문</div>
+  <div class="card">${topPlaces.map(([pid,n], i) => { const p = placeById(pid); return `<div class="kv" onclick="go('#/place/${pid}')" style="cursor:pointer"><span>${i+1}. ${esc(p?.name||'')} ${gradeBadge(p?.grade)}</span><span>${n}회</span></div>`; }).join('')}</div>
+  ${Object.keys(src).length ? `<div class="sec-title">어디서 알게 된 곳이 좋았을까? (전체 기간)</div>
+  <div class="card"><table class="t"><tr><th>경로</th><th class="r">곳</th><th class="r">평균 등급</th><th class="r">평균 점수</th></tr>
+    ${Object.entries(src).sort((a,b) => (avg(b[1].s)||0) - (avg(a[1].s)||0)).map(([k,o]) => `<tr><td>${esc(k)}</td><td class="r">${o.n}</td><td class="r">${o.g.length ? avg(o.g).toFixed(1)+'★' : '-'}</td><td class="r">${o.s.length ? avg(o.s).toFixed(2) : '-'}</td></tr>`).join('')}
+  </table><div class="meta" style="margin-top:6px">평균 등급: 3스타=3, 2스타=2, 1스타·보구르망=1, 셀렉션=0.5, 재방문X=0</div></div>` : ''}
+  ${expRows.length ? `<div class="sec-title">예상 vs 실제 금액 (전체 기간)</div>
+  <div class="card"><div class="kv"><span>평균 차이</span><span><b>${(() => { const d = avg(expRows.map(r => (r.a-r.e)/r.e*100)); return (d>0?'+':'') + Math.round(d) + '%'; })()}</b></span></div>
+    ${expRows.sort((a,b) => Math.abs(b.a-b.e)/b.e - Math.abs(a.a-a.e)/a.e).slice(0,5).map(r => `<div class="kv"><span>${esc(r.p.name)}</span><span>${won(r.e)} → ${won(r.a)}</span></div>`).join('')}</div>` : ''}
+  ${split.length ? `<div class="sec-title">🤔 의견 분분 (점수 1점 이상 차이)</div>
+  <div class="card">${split.map(x => `<div class="kv" onclick="go('#/place/${x.v.place_id}')" style="cursor:pointer"><span>${esc(placeById(x.v.place_id)?.name||'')}</span><span>${whoName(1)} ${x.s1.toFixed(1)} · ${whoName(2)} ${x.s2.toFixed(1)}</span></div>`).join('')}</div>` : ''}`;
+}
+function memoryEdition(year){
+  const yv = S.visits.filter(v => v.visited_at.startsWith(String(year)));
+  const pids = [...new Set(yv.map(v => v.place_id))];
+  const places = pids.map(placeById).filter(Boolean);
+  const sections = ['3star','2star','1star','bogourmand','selection'].map(g => {
+    const ps = places.filter(p => p.grade === g); if(!ps.length) return '';
+    return `<div class="ed-sec"><h3>${GRADES[g].short} ${GRADES[g].label}</h3><div class="d">${GRADES[g].desc}</div>
+      ${ps.map(p => {
+        const vs = yv.filter(v => v.place_id === p.id).sort(byDateDesc);
+        const lines = vs.flatMap(v => scoresOf(v.id).filter(s => s.one_line).map(s => `${whoName(s.profile_id)} “${esc(s.one_line)}”`)).slice(0,2);
+        const unit = placeAvgUnit(p);
+        return `<div class="ed-item">${thumbHtml(coverOfPlace(p.id), catIcon(p.category))}<div class="pbody">
+          <div class="pname">${esc(p.name)} <span class="tier">${tierText(p.price_tier)}</span></div>
+          <div class="meta">${catIcon(p.category)} ${esc(p.sub_category || CAT[p.category].label)} · ${esc(p.region||'')} · ${vs.length}회 방문${unit!=null ? ' · '+(p.category==='stay'?'1박 ':'1인 ')+won(unit) : ''}</div>
+          ${lines.map(l => `<div class="oneline">${l}</div>`).join('')}</div></div>`;
+      }).join('')}</div>`;
+  }).join('');
+  const starCount = places.filter(p => ['3star','2star','1star'].includes(p.grade)).length;
+  return `<div class="edition">
+    <div class="ed-cover"><div class="y">${year} EDITION</div><h2>보슐랭 가이드 ${year}</h2>
+      <div class="meta">${whoName(1)} &amp; ${whoName(2)} · ${places.length}곳 방문 · 스타 ${starCount}곳</div></div>
+    ${sections || `<div class="empty">${year}년에 등급을 받은 곳이 아직 없어요.<br>장소 상세에서 🏅 등급을 매겨 보세요</div>`}
+  </div>`;
+}
+
+/* ===================== 설정 ===================== */
+function openSettings(){
+  modal(`<h3>설정</h3>
+    <div class="card"><div class="meta" style="margin-bottom:8px">이 기기 사용자</div>
+      <div class="row">${[1,2].map(id => `<button class="btn ${S.profile===id?'primary':''}" onclick="setProfile(${id})">${PROFILES[id].name}</button>`).join('')}</div></div>
+    <button class="btn full" onclick="refreshAll()">🔄 새로고침</button>
+    <button class="btn full" onclick="showInstallGuide()">📲 홈 화면에 설치하는 법</button>
+    <button class="btn full" onclick="exportBackup()">💾 백업 파일 내려받기</button>
+    <div class="sec-title">가격대 기준</div>
+    <div class="card"><table class="t"><tr><th></th><th>음식·놀거리 (1인)</th><th>숙박 (1박)</th></tr>
+      <tr><td>₩</td><td>~1만</td><td>~7만</td></tr><tr><td>₩₩</td><td>1~3만</td><td>7~15만</td></tr>
+      <tr><td>₩₩₩</td><td>3~7만</td><td>15~30만</td></tr><tr><td>₩₩₩₩</td><td>7만~</td><td>30만~</td></tr></table></div>
+    <button class="btn danger full" onclick="logout()">로그아웃</button>
+    <div class="meta center" style="margin-top:12px">보슐랭 가이드 v${APP_VERSION}</div>`);
+}
+async function refreshAll(){ closeModal(); try { await loadAll(); renderRoute(); toast('새로 불러왔어요'); } catch(e){ toast(e.message); } }
+function exportBackup(){
+  const data = { exported_at:new Date().toISOString(), places:S.places, visits:S.visits, visit_scores:S.scores, visit_payments:S.payments, visit_items:S.items, photos:S.photos, trips:S.trips, trip_stops:S.stops };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type:'application/json' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `boschelin-backup-${todayStr()}.json`; a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+}
+async function installNow(){ if(!S.installEvt) return; S.installEvt.prompt(); await S.installEvt.userChoice; S.installEvt = null; closeModal(); }
+function showInstallGuide(){
+  modal(`<h3>📲 홈 화면에 설치하기</h3>
+    ${S.installEvt ? `<button class="btn primary full" onclick="installNow()" style="margin-bottom:12px">지금 설치하기</button>` : ''}
+    <div class="card"><b>갤럭시 (크롬)</b>
+      <ol style="padding-left:18px;margin:8px 0 0;font-size:14px"><li>크롬으로 이 주소를 열기</li><li>오른쪽 위 <b>⋮</b> 메뉴</li><li><b>앱 설치</b> (또는 홈 화면에 추가)</li></ol>
+      <div class="meta" style="margin-top:6px">설치 후 네이버지도·유튜브 등에서 <b>공유 → 보슐랭</b>으로 바로 저장할 수 있어요</div></div>
+    <div class="card"><b>아이폰 (사파리)</b>
+      <ol style="padding-left:18px;margin:8px 0 0;font-size:14px"><li>사파리로 이 주소를 열기</li><li>아래쪽 <b>공유 버튼</b> (□↑)</li><li><b>홈 화면에 추가</b> → 추가</li></ol>
+      <div class="meta" style="margin-top:6px">아이폰은 공유 메뉴 저장이 안 돼서, 링크를 복사한 뒤 ＋ 화면의 <b>📋 링크 붙여넣기</b>를 눌러 주세요</div></div>`);
+}
+
+boot();
+</script>
+</body>
+</html>
